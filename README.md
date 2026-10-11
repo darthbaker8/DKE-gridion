@@ -36,3 +36,10 @@ This package is intentionally flattened for iPad/GitHub web uploads. All files b
 
 ### Snapshot cadence
 Vercel cron calls `/api/snapshot` every 3 minutes (`*/3 * * * *`).
+
+
+## v13
+- 3-minute snapshot buckets (fixes 3-minute cron overwriting a 15-minute bucket).
+- Trend header shows snapshot count, cadence, and latest snapshot time.
+- Trend P75 toggle overlays dotted best-case forecast lines.
+- Snapshots now store players-left/live counts so P75 tightens as games complete.

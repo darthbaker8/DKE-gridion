@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
       return res.status(200).json({ stored: false, reason: 'no active games', week: data.scoringPeriodId });
     }
 
-    const ts = Math.floor(now.getTime() / 900000) * 900000;
+    const ts = Math.floor(now.getTime() / 180000) * 180000;
     const snapshot = {
       ts,
       capturedAt: now.toISOString(),
@@ -44,7 +44,9 @@ module.exports = async (req, res) => {
         id: Number(t.id),
         name: t.ownerName || t.name,
         projected: Number(t.projected || 0),
-        current: Number(t.current || 0)
+        current: Number(t.current || 0),
+        playersLeftCount: Number(t.playersLeftCount || 0),
+        playersLiveCount: Array.isArray(t.playersLive) ? t.playersLive.length : 0
       }))
     };
 
