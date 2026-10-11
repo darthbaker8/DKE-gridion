@@ -22,11 +22,16 @@
     .team-detail-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:50;display:none;align-items:center;justify-content:center;padding:18px}.team-detail-backdrop.open{display:flex}.team-detail{width:min(760px,100%);max-height:min(820px,92vh);overflow:auto;background:#171b21;border:1px solid #303741;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.55)}.team-detail-head{position:sticky;top:0;z-index:2;background:rgba(23,27,33,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 16px 12px}.team-detail-topline{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.team-detail-title{font-size:20px;font-weight:900;line-height:1.1}.team-detail-sub{font-size:12px;color:var(--muted);margin-top:4px}.team-detail-close{appearance:none;border:1px solid var(--line);background:#11151a;color:var(--text);width:34px;height:34px;border-radius:10px;font-size:20px;line-height:1;cursor:pointer}.team-scorebar{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}.team-scorebox{background:#11151a;border:1px solid var(--line);border-radius:11px;padding:9px 10px}.team-scorebox span{display:block;color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.team-scorebox b{display:block;font-size:21px;margin-top:2px;font-variant-numeric:tabular-nums}.team-scorebox.proj b{color:var(--green)}.team-scorebox.p75 b{color:#90dfff}.team-remaining{padding:10px 16px;border-bottom:1px solid var(--line);font-size:12px;line-height:1.55;color:#d5dbe4}.team-roster{padding:8px 12px 14px}.roster-head,.roster-row{display:grid;grid-template-columns:42px minmax(0,1fr) 64px 58px 58px;gap:8px;align-items:center}.roster-head{padding:7px 8px;color:var(--muted);font-size:9px;font-weight:900;letter-spacing:.09em;text-transform:uppercase}.roster-row{padding:10px 8px;border-top:1px solid #282e36}.roster-slot{color:var(--muted);font-size:11px;font-weight:800}.roster-name{font-size:14px;font-weight:850;min-width:0}.roster-meta{font-size:10px;color:#737d89;margin-left:5px;font-weight:700}.roster-status{text-align:center}.roster-num{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;font-weight:800}.roster-pts.hot{color:var(--green)}.status-chip{display:inline-block;font-size:9px;font-weight:900;letter-spacing:.06em;border-radius:5px;padding:3px 5px}.status-chip.LIVE{color:#ffc0c0;background:#401617;border:1px solid #7a2225}.status-chip.LATER{color:#ddd;background:#2a2a28;border:1px solid #494943}.status-chip.FINAL{color:#aeb7c3;background:#16191d;border:1px solid #31363e}.team-detail-note{padding:0 16px 14px;color:var(--muted);font-size:10px}
 
     @media(max-width:700px){.wrap{padding:14px 8px 28px}.top{align-items:center;margin-bottom:10px;padding:0 4px}h1{font-size:24px}.sub{font-size:12px;margin-top:4px}.pill{font-size:11px;padding:6px 8px}.toolbar{padding:0 4px}.card{border-radius:12px}table,thead,tbody{display:block;width:100%}thead tr,tbody tr{display:grid;grid-template-columns:30px minmax(0,1fr) 72px 82px;align-items:center}thead tr{padding:0 6px}tbody tr{padding:0 6px}th,td{padding:10px 6px}.rank{width:auto;text-align:left}.team{font-size:14px;line-height:1.2}.num{font-size:15px}.proj{font-size:16px}th:nth-child(5){display:none}.left{grid-column:2/5;max-width:none;padding-top:0;padding-bottom:10px;font-size:11.5px;line-height:1.35;color:#cbd2dc;min-height:0}.left:empty{display:none}.player-group{display:inline}.player-group+.player-group{margin-left:7px}.footer{font-size:10px;padding:0 4px;align-items:flex-start}.footer span:first-child{max-width:62%}.quick-head,.qrow{grid-template-columns:32px minmax(0,1fr) 66px}.range-head,.rrow{grid-template-columns:28px minmax(0,1fr) 51px 51px 51px;gap:4px;padding-left:8px;padding-right:8px}.rname{font-size:13px}.rnum{font-size:13px}.qrow{padding:10px 10px}.qname{font-size:15px}.qproj{font-size:16px}.mainnav{padding:0 4px}.mainnav button{flex:1}.history table{min-width:760px}.history .ownercol{min-width:130px}.history th,.history td{padding:9px 8px}.history .seasoncell b{font-size:14px}.full-cut-row{display:block!important;padding:0!important}.full-cut-row td{display:block!important;padding:0!important;grid-column:1/-1}.full-cut-row .cutline{margin:0}.team-detail-backdrop{padding:0;align-items:flex-end}.team-detail{width:100%;max-height:91vh;border-radius:18px 18px 0 0;border-bottom:0}.team-scorebar{grid-template-columns:1fr 1fr 1fr}.roster-head,.roster-row{grid-template-columns:36px minmax(0,1fr) 55px 48px 48px;gap:5px}.roster-name{font-size:13px}.roster-meta{display:block;margin-left:0;margin-top:2px}.roster-num{font-size:12px}}
+  
+    :root{--bg:#080f20;--card:#101d35;--line:#293b59;--gold:#e3bd68;--green:#e3bd68}
+    body{background:radial-gradient(ellipse at top left,#152f57 0,transparent 65%),var(--bg)}
+    .top{border-top:3px solid var(--gold);padding-top:18px;align-items:center}.brand{display:flex;align-items:center;gap:14px}.dke-mark{display:grid;place-items:center;flex-shrink:0;width:65px;height:72px;border:2px solid var(--gold);border-radius:8px 8px 26px 26px;background:#102747;color:var(--gold);font-family:Georgia,serif;font-weight:bold;font-size:23px;box-shadow:inset 0 -9px #941c37}.brand-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}.brand-motto{font-family:Georgia,serif;font-size:12px;color:#b5bfd1;margin:12px 0 16px}.mainnav{flex-wrap:wrap}.mainnav button.active{background:#941c37;border-color:#c84a66}.card{border-color:#293b59}.trend-chart{min-width:0;touch-action:pan-y;cursor:crosshair}.scrubber{margin:12px 4px;background:#0b162b;border:1px solid var(--line);border-radius:12px;padding:12px}.scrub-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px}.scrub-head label{color:var(--gold);font-weight:800}.scrub-time{font-variant-numeric:tabular-nums;color:#d8e1ef}.scrubber input{display:block;width:100%;margin:14px 0;accent-color:var(--gold)}.scrub-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.scrub-score{appearance:none;color:var(--text);background:#12223c;border:1px solid transparent;border-radius:7px;padding:8px;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;cursor:pointer;font-size:12px}.scrub-score.selected{border-color:var(--gold);background:#253453}.scrub-score span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scrub-score b{white-space:nowrap;font-variant-numeric:tabular-nums}.scrub-hint{color:var(--muted);font-size:10px;margin-top:8px}.trend-chart polyline{transition:stroke-opacity .1s}
+    @media(max-width:700px){.dke-mark{width:49px;height:57px;font-size:19px}.brand{gap:9px}.brand-eyebrow{font-size:8px;letter-spacing:.1em}.brand-motto{font-size:10px;margin-left:4px}.top{gap:8px}.trend-toolbar{flex-wrap:wrap}.trend-chart{height:auto;aspect-ratio:900/430}.scrub-scores{grid-template-columns:1fr 1fr}.scrub-score{font-size:11px}.scrub-head{flex-wrap:wrap}}
   </style>
 </head>
 <body>
   <main class="wrap">
-    <div class="top"><div><h1>DKE Gridiron</h1><div class="sub" id="week">Live all-play leaderboard</div></div><div class="pill" id="status">Updating…</div></div>
+    <div class="top"><div class="brand"><div class="dke-mark" aria-label="Delta Kappa Epsilon monogram">ΔΚΕ</div><div><div class="brand-eyebrow">Delta Kappa Epsilon · Est. 1844</div><h1>DKE Gridiron</h1><div class="sub" id="week">Live all-play leaderboard</div></div></div><div class="pill" id="status">Updating…</div></div><div class="brand-motto">Gentlemen • Scholars • Jolly Good Fellows</div>
     <div class="mainnav"><button id="liveTab" class="active">Live</button><button id="trendTab">Trend</button><button id="historyTab">H2H History</button><button id="recalcTab">Top-5 Recalc</button><button id="ranksTab">Ranks</button></div>
 
     <section class="liveview" id="liveView">
@@ -43,7 +48,7 @@
           <div class="trend-actions"><button class="trend-toggle" id="trendP75Btn">Show P75</button><button class="trend-current" id="trendCurrentBtn">Current week</button></div>
         </div>
         <div class="trend-meta" id="trendMeta"></div><div class="trend-chart-wrap"><svg id="trendChart" class="trend-chart" viewBox="0 0 900 430" preserveAspectRatio="xMidYMid meet"></svg></div>
-        <div class="trend-legend" id="trendLegend"></div>
+        <div class="scrubber" id="trendScrubber" hidden><div class="scrub-head"><label for="trendScrubRange">Snapshot replay</label><output class="scrub-time" id="trendScrubTime"></output></div><input id="trendScrubRange" type="range" min="0" max="0" value="0" step="1" aria-label="Select a stored trend snapshot"><div class="scrub-scores" id="trendScrubScores"></div><div class="scrub-hint">Hover or drag on the chart, or slide through saved snapshots. Tap a name to highlight a team. Scores come from the selected snapshot.</div></div><div class="trend-legend" id="trendLegend"></div>
         <div class="trend-note">Projected-score snapshots are saved automatically every 3 minutes while NFL games are live. Toggle P75 to overlay a dotted best-case forecast based on remaining unplayed projection uncertainty. Pick any stored week to replay how the league moved through the slate.</div>
       </div>
     </section>
@@ -161,8 +166,39 @@ async function loadTrendWeeks(){
 async function loadTrend(sel=selectedTrend()){
   if(!sel)return;
   trendSelection={season:Number(sel.season),week:Number(sel.week)};rebuildTrendPickers();
-  try{const r=await fetch(`/api/trend?season=${encodeURIComponent(trendSelection.season)}&week=${encodeURIComponent(trendSelection.week)}`,{cache:'no-store'});const x=await r.json();if(!r.ok)throw new Error(x?.detail||x?.error||'Trend history unavailable');trendSnapshots=Array.isArray(x.snapshots)?x.snapshots:[];renderTrend();updateTrendSubtitle();}catch(e){trendSnapshots=[];trendChart.innerHTML='<text x="450" y="205" text-anchor="middle" fill="#ffb4b4" font-size="15">Automatic trend storage is not connected yet</text><text x="450" y="230" text-anchor="middle" fill="#9aa4b2" font-size="12">Connect a Vercel Blob store, then redeploy.</text>';trendLegend.innerHTML='';}
+  const key=`${trendSelection.season}/${trendSelection.week}`;if(key!==trendLoadedKey){trendScrubIndex=null;trendFocusId=null;trendLoadedKey=key;}
+  try{const r=await fetch(`/api/trend?season=${encodeURIComponent(trendSelection.season)}&week=${encodeURIComponent(trendSelection.week)}`,{cache:'no-store'});const x=await r.json();if(!r.ok)throw new Error(x?.detail||x?.error||'Trend history unavailable');trendSnapshots=Array.isArray(x.snapshots)?x.snapshots:[];renderTrend();updateTrendSubtitle();}catch(e){trendSnapshots=[];trendPlot=null;trendScrubIndex=null;trendScrubber.hidden=true;trendChart.innerHTML='<text x="450" y="205" text-anchor="middle" fill="#ffb4b4" font-size="15">Automatic trend storage is not connected yet</text><text x="450" y="230" text-anchor="middle" fill="#9aa4b2" font-size="12">Connect a Vercel Blob store, then redeploy.</text>';trendLegend.innerHTML='';}
 }
+const trendScrubber=document.getElementById('trendScrubber'),trendScrubRange=document.getElementById('trendScrubRange'),trendScrubTime=document.getElementById('trendScrubTime'),trendScrubScores=document.getElementById('trendScrubScores');
+let trendPlot=null,trendScrubIndex=null,trendFocusId=null,trendLoadedKey=null;
+function selectTrendSnapshot(index,focus){
+  if(!trendPlot||!trendSnapshots.length)return;
+  if(focus!==undefined)trendFocusId=focus;
+  trendScrubIndex=Math.max(0,Math.min(trendSnapshots.length-1,Math.round(index)));
+  const snap=trendSnapshots[trendScrubIndex],{x,y,ids,names}=trendPlot,xx=x(trendScrubIndex);
+  trendScrubRange.value=String(trendScrubIndex);
+  trendScrubTime.textContent=new Date(snap.ts).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',second:'2-digit'});
+  const overlay=trendChart.querySelector('#trendCursor');
+  let dots=`<line x1="${xx}" y1="20" x2="${xx}" y2="382" stroke="#e3bd68" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+  for(const t of snap.teams||[]){if(!Number.isFinite(Number(t.projected)))continue;const color=TREND_COLORS[ids.indexOf(t.id)%TREND_COLORS.length];dots+=`<circle cx="${xx}" cy="${y(Number(t.projected))}" r="${trendFocusId===t.id?6:4}" fill="${color}" stroke="#080f20" stroke-width="2"/>`;}
+  if(overlay)overlay.innerHTML=dots;
+  const ordered=(snap.teams||[]).filter(t=>Number.isFinite(Number(t.projected))).slice().sort((a,b)=>Number(b.projected)-Number(a.projected));
+  trendScrubScores.innerHTML=ordered.map(t=>{const color=TREND_COLORS[ids.indexOf(t.id)%TREND_COLORS.length];return `<button class="scrub-score ${trendFocusId===t.id?'selected':''}" data-scrub-id="${esc(String(t.id))}" aria-pressed="${trendFocusId===t.id}"><span style="border-left:3px solid ${color};padding-left:6px">${esc(t.name||names.get(t.id)||('Team '+t.id))}</span><b>${fmt(t.projected)}${trendShowP75?' / '+fmt(snapshotP75(t))+' P75':''}</b></button>`}).join('');
+  for(const line of trendChart.querySelectorAll('[data-trend-id]'))line.setAttribute('stroke-opacity',trendFocusId===null||line.dataset.trendId===String(trendFocusId)?(line.hasAttribute('stroke-dasharray')?'.72':'1'):'.15');
+}
+trendScrubScores.onclick=e=>{const button=e.target.closest('[data-scrub-id]');if(!button||!trendPlot)return;const id=trendPlot.ids.find(id=>String(id)===button.dataset.scrubId);selectTrendSnapshot(trendScrubIndex,trendFocusId===id?null:id);};
+trendScrubRange.oninput=()=>selectTrendSnapshot(Number(trendScrubRange.value));
+function scrubChart(e){
+  if(!trendPlot)return;
+  const point=trendChart.createSVGPoint();point.x=e.clientX;point.y=e.clientY;const matrix=trendChart.getScreenCTM();if(!matrix)return;const pos=point.matrixTransform(matrix.inverse());
+  const index=trendSnapshots.length===1?0:Math.round((pos.x-55)/827*(trendSnapshots.length-1));
+  const snap=trendSnapshots[Math.max(0,Math.min(trendSnapshots.length-1,index))];let nearest=null,distance=Infinity;
+  for(const t of snap.teams||[]){if(!Number.isFinite(Number(t.projected)))continue;const d=Math.abs(trendPlot.y(Number(t.projected))-pos.y);if(d<distance){distance=d;nearest=t.id;}}
+  selectTrendSnapshot(index,nearest);
+}
+trendChart.onpointerdown=e=>{trendChart.setPointerCapture(e.pointerId);scrubChart(e);};
+trendChart.onpointermove=e=>{if(e.pointerType==='mouse'||trendChart.hasPointerCapture(e.pointerId))scrubChart(e);};
+trendChart.onpointerup=e=>{if(trendChart.hasPointerCapture(e.pointerId))trendChart.releasePointerCapture(e.pointerId);};
 let trendShowP75=localStorage.getItem('dke-trend-p75')==='1';
 function snapshotP75(t){const current=Number(t.current||0),projected=Math.max(current,Number(t.projected||current)),remaining=Math.max(0,projected-current);if(remaining<=0.05)return projected;const left=Math.max(1,Number(t.playersLeftCount||1)),live=Math.max(0,Number(t.playersLiveCount||0)),liveShare=Math.min(1,live/left),cv=.30-.07*liveShare,half=.674*cv*remaining;return projected+half;}
 function updateTrendP75Button(){trendP75Btn.classList.toggle('active',trendShowP75);trendP75Btn.textContent=trendShowP75?'Hide P75':'Show P75';}
@@ -172,7 +208,7 @@ function renderTrend(){
   if(snaps.length<1){
     trendMeta.textContent='';
     trendChart.innerHTML='<text x="450" y="205" text-anchor="middle" fill="#9aa4b2" font-size="15">No snapshots stored for this week</text><text x="450" y="230" text-anchor="middle" fill="#9aa4b2" font-size="12">Snapshots appear automatically every 3 minutes while NFL games are live.</text>';
-    trendLegend.innerHTML='';return;
+    trendLegend.innerHTML='';trendScrubber.hidden=true;trendPlot=null;trendScrubIndex=null;return;
   }
   const ids=[...new Set(snaps.flatMap(s=>(s.teams||[]).map(t=>t.id)))];
   const latestNames=new Map();for(const snap of snaps)for(const t of (snap.teams||[]))if(t.name)latestNames.set(t.id,t.name);
@@ -187,10 +223,14 @@ function renderTrend(){
     const pts=[],p75pts=[];
     snaps.forEach((s,i)=>{const t=(s.teams||[]).find(z=>z.id===id);if(t&&Number.isFinite(Number(t.projected))){pts.push(`${x(i).toFixed(1)},${y(Number(t.projected)).toFixed(1)}`);if(trendShowP75)p75pts.push(`${x(i).toFixed(1)},${y(snapshotP75(t)).toFixed(1)}`);}});
     const color=TREND_COLORS[idx%TREND_COLORS.length];
-    if(trendShowP75&&p75pts.length)svg+=`<polyline points="${p75pts.join(' ')}" fill="none" stroke="${color}" stroke-opacity=".72" stroke-width="2" stroke-dasharray="7 6" stroke-linejoin="round" stroke-linecap="round"/>`;
-    if(pts.length)svg+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(trendShowP75&&p75pts.length)svg+=`<polyline data-trend-id="${esc(String(id))}" points="${p75pts.join(' ')}" fill="none" stroke="${color}" stroke-opacity=".72" stroke-width="2" stroke-dasharray="7 6" stroke-linejoin="round" stroke-linecap="round"/>`;
+    if(pts.length)svg+=`<polyline data-trend-id="${esc(String(id))}" points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
   });
-  trendChart.innerHTML=svg;
+  const previousLength=trendPlot?.count;
+  const followLatest=trendScrubIndex===null||trendScrubIndex===previousLength-1;
+  trendChart.innerHTML=svg+'<g id="trendCursor" pointer-events="none"></g>';
+  trendPlot={x,y,ids,names:latestNames,count:snaps.length};trendScrubber.hidden=false;trendScrubRange.max=String(snaps.length-1);trendScrubRange.disabled=snaps.length===1;
+  selectTrendSnapshot(followLatest?snaps.length-1:trendScrubIndex);
   trendLegend.innerHTML=ids.map((id,idx)=>`<div class="legend-item"><span class="legend-swatch" style="background:${TREND_COLORS[idx%TREND_COLORS.length]}"></span><span>${esc(latestNames.get(id)||('Team '+id))}</span></div>`).join('')+(trendShowP75?'<div class="legend-item"><svg width="18" height="5" viewBox="0 0 18 5"><line x1="0" y1="2.5" x2="18" y2="2.5" stroke="#9aa4b2" stroke-width="2" stroke-dasharray="4 3"/></svg><span>P75 best-case</span></div>':'');
   const latest=new Date(snaps[snaps.length-1].ts).toLocaleTimeString([],{hour:'numeric',minute:'2-digit'});
   trendMeta.textContent=`${snaps.length} snapshot${snaps.length===1?'':'s'} • every 3 min • latest ${latest}`;

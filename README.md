@@ -1,4 +1,4 @@
-# DKE Gridiron v11
+# DKE Gridiron v15
 
 ## Automatic + Historical Trend Collection
 
@@ -13,11 +13,11 @@ The Trend tab now has Season and Week selectors. It can replay any week that has
 ### One-time Vercel setup
 1. Connect a Vercel Blob store to this project.
 2. Redeploy.
-3. The included cron calls `/api/snapshot` every 15 minutes and writes only on Thu/Sun/Mon ET when ESPN reports active players.
+3. The included cron calls `/api/snapshot` every 3 minutes and writes only on Thu/Sun/Mon ET when ESPN reports active players.
 4. Optional: configure `CRON_SECRET`.
 
 ### Plan note
-A 15-minute Vercel Cron requires a plan that supports that cadence. Otherwise an external scheduler can call `/api/snapshot` every 15 minutes.
+A 3-minute Vercel Cron requires a plan that supports that cadence. Otherwise an external scheduler can call `/api/snapshot` every 3 minutes.
 
 ### Endpoints
 - `/api/leaderboard` — live ESPN data
@@ -49,3 +49,14 @@ Vercel cron calls `/api/snapshot` every 3 minutes (`*/3 * * * *`).
 - Team detail / roster drill-down: tap any team in Live, Quick, or P25–P75.
 - Shows current, ESPN projected, P75, live/later starters, and player-level projected/current points.
 - Keeps 3-minute trend snapshots and P75 trend overlay from v13.
+
+## v15 — DKE branding + interactive trend replay
+- Blue, gold, and crimson theme with a ΔΚΕ monogram (not a reproduction of the official badge) and fraternity motto.
+- Hover or drag on the trend chart to select a stored snapshot; use the range slider on touch devices or with arrow keys.
+- Timestamp, team names, exact projected scores, and optional P75 values update together. No interpolation between snapshots.
+- Tap a snapshot score to highlight a team; tap again to clear the highlight.
+- Retains v14 roster details, 3-minute cron and storage buckets, P75 overlay, and historical views.
+- All 10 files stay at ZIP root for GitHub web upload.
+
+## Manual update
+Unzip this package and upload all 10 files into the root of the existing GitHub repository, replacing matching files. Commit to the branch connected to the existing Vercel project. Reuse the existing project and Blob connection.
