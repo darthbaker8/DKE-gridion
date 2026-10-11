@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "leaderboard.js", "use": "@vercel/node" },
+    { "src": "history.js", "use": "@vercel/node" },
+    { "src": "snapshot.js", "use": "@vercel/node" },
+    { "src": "trend.js", "use": "@vercel/node" },
+    { "src": "trend-weeks.js", "use": "@vercel/node" },
+    { "src": "index.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/leaderboard", "dest": "/leaderboard.js" },
+    { "src": "/api/history", "dest": "/history.js" },
+    { "src": "/api/snapshot", "dest": "/snapshot.js" },
+    { "src": "/api/trend-weeks", "dest": "/trend-weeks.js" },
+    { "src": "/api/trend", "dest": "/trend.js" },
+    { "src": "/", "dest": "/index.html" },
+    { "handle": "filesystem" }
+  ],
+  "crons": [
+    {
+      "path": "/api/snapshot",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}
