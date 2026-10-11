@@ -43,3 +43,9 @@ Vercel cron calls `/api/snapshot` every 3 minutes (`*/3 * * * *`).
 - Trend header shows snapshot count, cadence, and latest snapshot time.
 - Trend P75 toggle overlays dotted best-case forecast lines.
 - Snapshots now store players-left/live counts so P75 tightens as games complete.
+
+
+## v14
+- Team detail / roster drill-down: tap any team in Live, Quick, or P25–P75.
+- Shows current, ESPN projected, P75, live/later starters, and player-level projected/current points.
+- Keeps 3-minute trend snapshots and P75 trend overlay from v13.

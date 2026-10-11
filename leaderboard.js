@@ -95,7 +95,62 @@ function remainingFromRoster(roster, gameStates) {
   return left;
 }
 
-function sideRows(match, teamsById, membersById, gameStates) {
+
+
+const SLOT_NAMES = {
+  0: 'QB', 2: 'RB', 4: 'WR', 6: 'TE', 7: 'OP', 16: 'D/ST', 17: 'K',
+  20: 'BE', 21: 'IR', 23: 'FLEX'
+};
+const POSITION_NAMES = {1:'QB',2:'RB',3:'WR',4:'TE',5:'K',16:'D/ST'};
+const PRO_TEAM_ABBR = {
+  1:'ATL',2:'BUF',3:'CHI',4:'CIN',5:'CLE',6:'DAL',7:'DEN',8:'DET',9:'GB',10:'TEN',
+  11:'IND',12:'KC',13:'LV',14:'LAR',15:'MIA',16:'MIN',17:'NE',18:'NO',19:'NYG',20:'NYJ',
+  21:'PHI',22:'ARI',23:'PIT',24:'LAC',25:'SF',26:'SEA',27:'TB',28:'WAS',29:'CAR',30:'JAX',
+  33:'BAL',34:'HOU'
+};
+function playerStatTotal(entry, scoringPeriodId, statSourceId) {
+  const player = entry?.playerPoolEntry?.player;
+  const stats = Array.isArray(player?.stats) ? player.stats : [];
+  const exact = stats.find(s => Number(s.scoringPeriodId) === Number(scoringPeriodId) && Number(s.statSourceId) === Number(statSourceId));
+  if (Number.isFinite(Number(exact?.appliedTotal))) return Number(exact.appliedTotal);
+  const fallback = stats.find(s => Number(s.statSourceId) === Number(statSourceId) && Number.isFinite(Number(s?.appliedTotal)));
+  return Number.isFinite(Number(fallback?.appliedTotal)) ? Number(fallback.appliedTotal) : null;
+}
+function playerGameState(entry, gameStates) {
+  const p = entry?.playerPoolEntry?.player;
+  const game = gameStates.get(Number(p?.proTeamId));
+  if (game) return game.state === 'UPCOMING' ? 'LATER' : game.state;
+  const gs = p?.proTeamSchedule?.gameStatus ?? p?.gameStatus ?? entry?.playerPoolEntry?.status;
+  const active = p?.activeGameStatus;
+  if (gs === 1 || gs === 'IN' || gs === 'IN_PROGRESS' || active === 1 || active === 'IN') return 'LIVE';
+  if (gs === 0 || gs === 'PRE' || gs === 'SCHEDULED' || active === 0 || active === 'PRE') return 'LATER';
+  return 'FINAL';
+}
+function starterDetails(roster, gameStates, scoringPeriodId) {
+  const entries = Array.isArray(roster?.entries) ? roster.entries : [];
+  return entries.filter(e => !isBench(e)).map((e, idx) => {
+    const p = e?.playerPoolEntry?.player || {};
+    const actualFromEntry = Number(e?.playerPoolEntry?.appliedStatTotal);
+    const actualFromStats = playerStatTotal(e, scoringPeriodId, 0);
+    const projectedFromStats = playerStatTotal(e, scoringPeriodId, 1);
+    const current = Number.isFinite(actualFromEntry) ? actualFromEntry : (Number.isFinite(actualFromStats) ? actualFromStats : 0);
+    const projected = Number.isFinite(projectedFromStats) ? projectedFromStats : current;
+    const slotId = Number(e?.lineupSlotId);
+    return {
+      slot: SLOT_NAMES[slotId] || POSITION_NAMES[Number(p?.defaultPositionId)] || 'FLEX',
+      slotId,
+      name: playerName(e) || 'Unknown player',
+      proTeam: PRO_TEAM_ABBR[Number(p?.proTeamId)] || '',
+      position: POSITION_NAMES[Number(p?.defaultPositionId)] || '',
+      status: playerGameState(e, gameStates),
+      current,
+      projected,
+      order: idx
+    };
+  });
+}
+
+function sideRows(match, teamsById, membersById, gameStates, scoringPeriodId) {
   const out = [];
   for (const key of ['home', 'away']) {
     const s = match?.[key];
@@ -105,6 +160,7 @@ function sideRows(match, teamsById, membersById, gameStates) {
     const projected = Number(s.totalProjectedPointsLive ?? s.totalProjectedPoints ?? current);
     const roster = s.rosterForCurrentScoringPeriod || s.rosterForMatchupPeriod || t.roster;
     const remaining = remainingFromRoster(roster, gameStates);
+    const players = starterDetails(roster, gameStates, scoringPeriodId);
     out.push({
       id: Number(s.teamId),
       name: teamName(t),
@@ -114,7 +170,8 @@ function sideRows(match, teamsById, membersById, gameStates) {
       playersLeft: remaining.map(x => x.name),
       playersLive: remaining.filter(x => x.state === 'LIVE').map(x => x.name),
       playersUpcoming: remaining.filter(x => x.state !== 'LIVE').map(x => x.name),
-      playersLeftCount: remaining.length
+      playersLeftCount: remaining.length,
+      players
     });
   }
   return out;
@@ -147,12 +204,13 @@ async function getLeaderboardData(weekOverride) {
   for (const m of data.schedule || []) {
     const sp = Number(m.matchupPeriodId ?? m.scoringPeriodId ?? scoringPeriodId);
     if (sp !== scoringPeriodId) continue;
-    for (const row of sideRows(m, teamsById, membersById, gameStates)) dedupe.set(row.id, row);
+    for (const row of sideRows(m, teamsById, membersById, gameStates, scoringPeriodId)) dedupe.set(row.id, row);
   }
 
   if (!dedupe.size) {
     for (const t of teamsById.values()) {
       const remaining = remainingFromRoster(t.roster, gameStates);
+      const players = starterDetails(t.roster, gameStates, scoringPeriodId);
       dedupe.set(Number(t.id), {
         id: Number(t.id),
         name: teamName(t),
@@ -162,7 +220,8 @@ async function getLeaderboardData(weekOverride) {
         playersLeft: remaining.map(x => x.name),
         playersLive: remaining.filter(x => x.state === 'LIVE').map(x => x.name),
         playersUpcoming: remaining.filter(x => x.state !== 'LIVE').map(x => x.name),
-        playersLeftCount: remaining.length
+        playersLeftCount: remaining.length,
+      players
       });
     }
   }
