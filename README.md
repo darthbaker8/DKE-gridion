@@ -32,3 +32,7 @@ A 15-minute Vercel Cron requires a plan that supports that cadence. Otherwise an
 
 ## Flat GitHub upload layout
 This package is intentionally flattened for iPad/GitHub web uploads. All files belong at the repository root. `vercel.json` maps the public `/api/*` routes to the root-level Node functions, so no `api/` folder is required.
+
+
+### Snapshot cadence
+Vercel cron calls `/api/snapshot` every 3 minutes (`*/3 * * * *`).
