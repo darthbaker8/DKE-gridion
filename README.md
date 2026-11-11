@@ -115,3 +115,10 @@ unavailable values instead of inventing wins.
 - Very small nonzero estimates now show `<5%` rather than rounding down to `0%`, so the dark shade and 0% label consistently identify zero simulations making the playoffs.
 - A model result of 0% does **not** necessarily mean mathematically eliminated; for weeks with no games remaining, it reflects the final ranking.
 - Same 11-file flat manual-upload layout; no changes to API, dependencies, or Vercel settings.
+
+## v19 — Expanded dark-red zone
+- Dark burgundy now covers **0% through 5% modeled playoff likelihood (inclusive)** rather than only exactly 0%.
+- Regular red begins above 5% (through below 30%); yellow and green ranges are unchanged.
+- A dark-red cell with a nonzero estimated chance still shows its nonzero chance label (`<5%` or `≈ 5%`) instead of displaying `0%`.
+- The legend and methodology text were updated. The dark color is a visualization threshold, not official ESPN odds or proof of mathematical elimination.
+- All 11 flat deployment files are preserved; no API, package, or Vercel configuration changes.
