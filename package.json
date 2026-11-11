@@ -1,8 +1,8 @@
 {
   "name": "dke-gridiron-live-leaderboard",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": true,
-  "description": "DKE fantasy football dashboard with historical week-by-week playoff race",
+  "description": "DKE fantasy football dashboard with playoff race, PF heatmap and season distributions",
   "engines": {
     "node": ">=20"
   },

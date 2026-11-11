@@ -1,4 +1,4 @@
-# DKE Gridiron v20 — Playoff Race & Season-Finish Badges
+# DKE Gridiron v21 — PF Heatmap & Distribution Explorer
 
 ## Automatic + Historical Trend Collection
 
@@ -142,3 +142,33 @@ unavailable values instead of inventing wins.
   and title-game results, and active-season suppression using synthetic fixtures.
 - Live ESPN league data is not accessible from the authoring environment; please
   compare past-season badge recipients against ESPN after deployment.
+
+
+## v21 — Cumulative points for, two-layer heatmap, distribution explorer
+
+### 1. Playoff Race grid: Wins / Points for switch
+- New **Wins | Points for** toggle under the week slider. Default remains Wins; the selection is retained in browser local storage.
+- In Points for mode, the outer cell background **continues** to show that team's estimated playoff odds. Rows retain the **wins-first** ranking, so the table does not reorder by PF.
+- The big number becomes cumulative PF; the former odds chip is replaced by a second, colored **n PF** badge. The inset colors are based on points-for rank **within that season at the selected week**: top 3 green, middle 4 yellow, bottom 3 red (for a 10-team league). This deliberately allows green-on-red or red-on-green combinations.
+- Commissioner-adjusted ESPN wins are retained in the latest current-season week. PF comes from reconstructed completed weekly ESPN box-score totals; the points do **not** change with the H2H vs retrospective top-five comparison.
+- Actual season-end Winner / Runner-Up / Playoff badges remain visible in both modes.
+
+### 2. Playoff Race: additional per-year rows
+- Under the grid, the summary table now shows **PF Minimum**, **PF Maximum**, **PF Standard Deviation**, and **PF Bimodal Rating** for every year at the selected week.
+- SD uses population standard deviation over all available teams, in *points for* (rather than weekly points).
+- The bimodality heuristic measures a **two-tier separation**: largest adjacent sorted PF gap with at least three teams on either side, divided by the typical neighboring PF gap. A small floor avoids a false infinite score when teams are tied or nearly tied. **Strong split** >= 2.5×; **Some split** >= 1.6×; otherwise **Even / gradual**. It is a descriptive rating, not a statistical test or proof of two underlying populations.
+
+### 3. New PF Distribution navigation tab
+- A second synchronized **Through Week** slider. Each completed season uses the *same* cumulative PF axis and its own distinctive color (2026 gold, 2025 blue, 2024 teal, 2023 purple, 2022 coral, 2021 pink).
+- **Separate lanes** (default) show one smoothed density curve per season and individual team dots. This is easiest to read; **Overlay all seasons** is available to directly compare outlines on the same plot.
+- Click or tap a team dot to inspect its team name, year, PF, and within-season PF ranking. Each dot also has a hover title and keyboard activation. Click year chips to hide/show curves.
+- Curves use a common-bandwidth Gaussian kernel density estimate over the **10 observed cumulative team totals**. They are smooth descriptive curves, not assumed-normal fits, and should not be treated as proof of population bimodality. Each year also has an accompanying numeric comparison table.
+- The new tab uses data already returned by `/api/race`; **no API route, dependencies, Vercel config, environment variables, or Blob data changes** are required.
+
+### Deployment
+- Same manual upload workflow. Extract all **11 files directly at the project root**, not in a nested folder. Upload the extracted directory to the existing `dke-gridiron-vercel-v11` Vercel project.
+- Previous sections (Live / Trend / H2H History / Top-5 Recalc / Ranks / Playoff Race), v20 season-finish badges, and three-minute trend collector are preserved.
+
+### Validation
+- Checked the frontend JS syntax; tested desktop (1300px) and mobile (390px) rendering with mocked 10-team/6-season data; validated metric toggle, both week sliders, per-year distribution marker counts, year filtering, chart mode switch, season-finish badges, two-tier heuristic for clearly split and evenly spaced data, and touch/click team selection. No browser script errors in those tests.
+- ESPN's live historical league feed and production deployments were **not** verified from the development environment. Check 2026 PF and past-season totals against ESPN after deployment.
