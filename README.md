@@ -1,4 +1,4 @@
-# DKE Gridiron v15
+# DKE Gridiron v16 — Playoff Race
 
 ## Automatic + Historical Trend Collection
 
@@ -58,5 +58,53 @@ Vercel cron calls `/api/snapshot` every 3 minutes (`*/3 * * * *`).
 - Retains v14 roster details, 3-minute cron and storage buckets, P75 overlay, and historical views.
 - All 10 files stay at ZIP root for GitHub web upload.
 
-## Manual update
-Unzip this package and upload all 10 files into the root of the existing GitHub repository, replacing matching files. Commit to the branch connected to the existing Vercel project. Reuse the existing project and Blob connection.
+## Manual deployment (no GitHub required)
+Unzip this package. All 11 files are at the ZIP root (no `api/` subfolder). In your existing
+`dke-gridiron-vercel-v11` Vercel project, upload/deploy the complete extracted folder as a new
+deployment. Do not create a new project; keep the existing Vercel Blob connection and environment
+variables. `vercel.json` routes the root files to `/api/*`.
+
+## v16 — Week-by-week Playoff Race
+- Adds **Playoff Race** as a sixth navigation tab. The week slider runs from Week 1 to the latest
+  completed regular-season week of 2026, so new completed weeks appear automatically.
+- Ranking rows #1–#10 are re-ranked separately for every season and every week (wins first,
+  cumulative fantasy points as tiebreaker). Columns are 2026 back through 2021, newest first.
+- **As played** (default): prior seasons use original head-to-head weekly wins; 2026 uses the
+  top-five scoring rule. At the latest completed week, fully applied commissioner-adjusted
+  ESPN W/L records replace the 2026 reconstruction. This honors manual adjustments.
+- **Top 5 for all years**: retrospective application of the current scoring rule to prior years,
+  allowing an apples-to-apples comparison of how quickly the league splits.
+- View the top-to-bottom win spread, top-half/bottom-half average win gap, and the count of teams
+  at least two wins behind the current playoff cutoff. Playoff berth count defaults to the ESPN
+  season setting, with 4-team and 6-team overrides.
+- The cutoff metric is descriptive — **not a mathematical elimination or probability model**.
+- New endpoint: `/api/race` fetches completed-week historical ESPN box scores for 2021–2026.
+  Current 2026 data may depend on how quickly the commissioner updates adjusted ESPN records.
+- No new environment variables, Blob schemas, or other services are required.
+
+## Validation and live-data caveat
+The route handler and frontend were tested against synthetic 10-team, nine-week ESPN-format
+fixtures. Browser tests passed at desktop and mobile sizes, including slider interaction and
+scoring mode changes. Live ESPN 2026 responses could not be fetched from the development
+environment, so **verify the first deployment's records with ESPN** (especially the commissioner-
+adjusted 2026 standings). If ESPN returns incomplete or inaccessible seasons, the UI displays
+unavailable values instead of inventing wins.
+
+
+## v17 — Playoff chance heatmap
+- Adds red → yellow → green shading to every available Playoff Race season/week cell,
+  with an estimated playoff chance label rounded to the nearest 5%.
+- Odds update when you drag the week slider, switch scoring modes, or change the
+  playoff berth count. Colors retain the v16 chronological comparison layout.
+- Uses 900 deterministic Monte Carlo simulated finishes per season and selected week.
+  Only the **current week's** cumulative standings and points are used to estimate
+  future weekly fantasy points; small samples are shrunk toward league average.
+  For historical H2H scoring, it also uses known future opponent pairings
+  (not future results); for top-five scoring it awards five wins per simulated week.
+- Adds a legend plus a 2026 count of teams with less than 20% modeled chances.
+  These are **heuristic estimates**, not official ESPN probabilities or a
+  mathematically rigorous elimination model. Actual odds depend on roster moves,
+  injuries, trades, keeper rules, and future commissioner adjustments.
+- `race.js` now returns each year's matchup *pairings only* for the remaining
+  regular-season schedule to simulate historical H2H games without future-score leakage.
+- No new services, credentials, packages, or Vercel configuration changes.

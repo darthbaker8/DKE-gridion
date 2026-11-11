@@ -10,6 +10,10 @@
       "use": "@vercel/node"
     },
     {
+      "src": "race.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "snapshot.js",
       "use": "@vercel/node"
     },
@@ -34,6 +38,10 @@
     {
       "src": "/api/history",
       "dest": "/history.js"
+    },
+    {
+      "src": "/api/race",
+      "dest": "/race.js"
     },
     {
       "src": "/api/snapshot",

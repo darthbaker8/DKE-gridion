@@ -27,12 +27,72 @@
     body{background:radial-gradient(ellipse at top left,#152f57 0,transparent 65%),var(--bg)}
     .top{border-top:3px solid var(--gold);padding-top:18px;align-items:center}.brand{display:flex;align-items:center;gap:14px}.dke-mark{display:grid;place-items:center;flex-shrink:0;width:65px;height:72px;border:2px solid var(--gold);border-radius:8px 8px 26px 26px;background:#102747;color:var(--gold);font-family:Georgia,serif;font-weight:bold;font-size:23px;box-shadow:inset 0 -9px #941c37}.brand-eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}.brand-motto{font-family:Georgia,serif;font-size:12px;color:#b5bfd1;margin:12px 0 16px}.mainnav{flex-wrap:wrap}.mainnav button.active{background:#941c37;border-color:#c84a66}.card{border-color:#293b59}.trend-chart{min-width:0;touch-action:pan-y;cursor:crosshair}.scrubber{margin:12px 4px;background:#0b162b;border:1px solid var(--line);border-radius:12px;padding:12px}.scrub-head{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12px}.scrub-head label{color:var(--gold);font-weight:800}.scrub-time{font-variant-numeric:tabular-nums;color:#d8e1ef}.scrubber input{display:block;width:100%;margin:14px 0;accent-color:var(--gold)}.scrub-scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.scrub-score{appearance:none;color:var(--text);background:#12223c;border:1px solid transparent;border-radius:7px;padding:8px;display:flex;justify-content:space-between;align-items:center;gap:8px;text-align:left;cursor:pointer;font-size:12px}.scrub-score.selected{border-color:var(--gold);background:#253453}.scrub-score span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scrub-score b{white-space:nowrap;font-variant-numeric:tabular-nums}.scrub-hint{color:var(--muted);font-size:10px;margin-top:8px}.trend-chart polyline{transition:stroke-opacity .1s}
     @media(max-width:700px){.dke-mark{width:49px;height:57px;font-size:19px}.brand{gap:9px}.brand-eyebrow{font-size:8px;letter-spacing:.1em}.brand-motto{font-size:10px;margin-left:4px}.top{gap:8px}.trend-toolbar{flex-wrap:wrap}.trend-chart{height:auto;aspect-ratio:900/430}.scrub-scores{grid-template-columns:1fr 1fr}.scrub-score{font-size:11px}.scrub-head{flex-wrap:wrap}}
+
+    /* Week-by-week playoff race: keep its comparison grid readable on desktop and mobile. */
+    .mainnav{flex-wrap:wrap}
+    .race-card{padding:17px 16px 12px;overflow:visible}
+    .race-eyebrow{font-size:10px;font-weight:850;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+    .race-title{font-size:23px;font-weight:850;letter-spacing:-.03em;margin:0 0 3px}
+    .race-subtitle{color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:17px}
+    .race-controls{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px}
+    .race-week-box{flex:1 1 250px;min-width:220px}
+    .race-week-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-weight:800;margin-bottom:6px}
+    .race-week-heading strong{font-size:24px;color:var(--gold)}
+    .race-week-box input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:23px;margin:4px 0}
+    .race-week-ends{display:flex;justify-content:space-between;color:var(--muted);font-size:10px}
+    .race-selects{display:flex;gap:9px;flex-wrap:wrap}
+    .race-selects label{display:flex;flex-direction:column;gap:5px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}
+    .race-selects select{font-size:12px;appearance:auto;padding:10px 10px;border:1px solid var(--line);background:#111c32;color:var(--text);border-radius:8px;max-width:210px;font-weight:700}
+    .race-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:8px 0 14px}
+    .race-stat{border:1px solid var(--line);border-radius:10px;background:#101a30;padding:12px}
+    .race-stat .label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:800}
+    .race-stat .value{font-size:23px;font-weight:850;color:var(--gold);margin:5px 0 3px;line-height:1.05}
+    .race-stat .detail{font-size:11px;color:var(--muted);line-height:1.35}
+    .race-table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:10px;border:1px solid var(--line)}
+    #raceView .race-table{min-width:770px;width:100%;border-collapse:collapse;table-layout:fixed}
+    #raceView .race-table thead,#raceView .race-table tbody,#raceView .race-table tr{display:table-header-group}
+    #raceView .race-table tbody{display:table-row-group}
+    #raceView .race-table tr{display:table-row}
+    #raceView .race-table th,#raceView .race-table td{display:table-cell;text-align:center;vertical-align:middle;white-space:normal;border-bottom:1px solid var(--line);padding:11px 6px}
+    #raceView .race-table th{font-size:12px;background:#111e35;letter-spacing:0}
+    #raceView .race-table .race-rank{width:72px;position:sticky;left:0;background:#101d35;border-right:1px solid var(--line);font-size:17px;font-weight:850;z-index:2}
+    #raceView .race-table th.race-rank{z-index:3;background:#142641;font-size:10px}
+    #raceView .race-table .race-current{background:rgba(227,189,104,.095)}
+    #raceView .race-table th.race-current{background:#28334b;color:var(--gold)}
+    #raceView .race-table .race-win{font-size:21px;font-weight:900;line-height:1.05;font-variant-numeric:tabular-nums}
+    #raceView .race-table .race-team{font-size:10px;color:#d8e2ef;overflow-wrap:anywhere;line-height:1.3;margin-top:5px}
+    #raceView .race-table td.race-odds-cell{transition:background-color .13s ease;box-shadow:inset 3px 0 0 var(--chance-accent)}
+    #raceView .race-table .race-odds{display:inline-block;margin-top:7px;padding:3px 6px;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:.01em;background:rgba(5,12,24,.37);color:var(--chance-text);font-variant-numeric:tabular-nums}
+    .race-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 15px;padding:10px 1px 12px;color:#dce4ed;font-size:11px}
+    .race-legend strong{font-size:11px;color:var(--gold)}
+    .race-key{display:inline-flex;align-items:center;gap:6px}
+    .race-key-swatch{display:inline-block;width:18px;height:13px;border:1px solid rgba(255,255,255,.18);border-radius:4px}
+    .race-key-note{color:var(--muted);font-size:10px;flex-basis:100%}
+    #raceView .race-table tr.race-divider td{border-top:2px solid rgba(227,189,104,.75)}
+    #raceView .race-table tr:last-child td{border-bottom:none}
+    #raceView .race-table td.race-no-data{color:var(--muted);font-size:12px}
+    .race-footnote{font-size:11px;color:var(--muted);line-height:1.55;margin-top:12px}
+    .race-year-summary{margin-top:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    #raceView .race-year-summary table{min-width:730px;width:100%;table-layout:fixed}
+    #raceView .race-year-summary table thead,#raceView .race-year-summary table tbody{display:table-header-group}
+    #raceView .race-year-summary table tbody{display:table-row-group}
+    #raceView .race-year-summary table tr{display:table-row}
+    #raceView .race-year-summary table td,#raceView .race-year-summary table th{display:table-cell;white-space:normal;text-align:center;padding:8px 5px;font-size:11px}
+    #raceView .race-year-summary table td:first-child,#raceView .race-year-summary table th:first-child{text-align:left;width:140px}
+    .race-warning{color:#f5d59e;background:#302513;border:1px solid #5d4826;border-radius:8px;font-size:11px;padding:9px 11px;margin:8px 0}
+    @media(max-width:700px){
+      .race-card{padding:13px 10px 11px}.race-title{font-size:21px}.race-stats{gap:5px}
+      .race-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .race-stat{padding:9px 7px}.race-stat .value{font-size:20px}.race-stat .label{font-size:9px}
+      #raceView .race-table th,#raceView .race-table td{padding:9px 5px}
+      #raceView .race-table .race-win{font-size:18px}
+    }
   </style>
 </head>
 <body>
   <main class="wrap">
     <div class="top"><div class="brand"><div class="dke-mark" aria-label="Delta Kappa Epsilon monogram">ΔΚΕ</div><div><div class="brand-eyebrow">Delta Kappa Epsilon · Est. 1844</div><h1>DKE Gridiron</h1><div class="sub" id="week">Live all-play leaderboard</div></div></div><div class="pill" id="status">Updating…</div></div><div class="brand-motto">Gentlemen • Scholars • Jolly Good Fellows</div>
-    <div class="mainnav"><button id="liveTab" class="active">Live</button><button id="trendTab">Trend</button><button id="historyTab">H2H History</button><button id="recalcTab">Top-5 Recalc</button><button id="ranksTab">Ranks</button></div>
+    <div class="mainnav"><button id="liveTab" class="active">Live</button><button id="trendTab">Trend</button><button id="historyTab">H2H History</button><button id="recalcTab">Top-5 Recalc</button><button id="ranksTab">Ranks</button><button id="raceTab">Playoff Race</button></div>
 
     <section class="liveview" id="liveView">
       <div class="toolbar"><div class="seg"><button id="quickBtn">Quick</button><button id="rangeBtn">P25–P75</button><button id="fullBtn">Full</button></div></div>
@@ -85,6 +145,42 @@
       </div>
     </section>
 
+
+    <section class="history" id="raceView">
+      <div class="card race-card">
+        <div class="race-eyebrow">Standings through time</div>
+        <h2 class="race-title">The Haves &amp; Have-Nots</h2>
+        <div class="race-subtitle">Compare the 1st-best through 10th-best record across every season, at the same point in the schedule. Each column is ranked independently; swipe horizontally for earlier years.</div>
+        <div class="race-controls">
+          <div class="race-week-box">
+            <div class="race-week-heading"><span>Through Week</span><strong id="raceWeekValue">—</strong></div>
+            <input type="range" id="raceWeekSlider" min="1" max="9" value="9" step="1" disabled aria-label="Compare standings through week">
+            <div class="race-week-ends"><span>Week 1</span><span id="raceLatestWeekLabel">Latest completed</span></div>
+          </div>
+          <div class="race-selects">
+            <label>Scoring comparison
+              <select id="raceModeSelect"><option value="asPlayed">As played</option><option value="topFive">Top 5 for all years</option></select>
+            </label>
+            <label>Playoff berths
+              <select id="raceSlotsSelect"><option value="espn">ESPN settings</option><option value="4">4 teams</option><option value="6">6 teams</option></select>
+            </label>
+          </div>
+        </div>
+        <div id="raceSummary" class="race-stats" aria-live="polite"></div>
+        <div class="race-legend" aria-label="Estimated playoff chance color key">
+          <strong>PLAYOFF ODDS</strong>
+          <span class="race-key"><span class="race-key-swatch" style="background:rgba(47,155,109,.58)"></span>Green · 70–100%</span>
+          <span class="race-key"><span class="race-key-swatch" style="background:rgba(207,158,50,.60)"></span>Yellow · 30–70%</span>
+          <span class="race-key"><span class="race-key-swatch" style="background:rgba(196,66,86,.58)"></span>Red · 0–30%</span>
+          <span class="race-key-note">Shading estimates each team's chance of finishing inside the playoff cut, based only on information through the selected week.</span>
+        </div>
+        <div id="raceWarnings"></div>
+        <div class="race-table-scroll"><table class="race-table"><thead id="raceTableHead"></thead><tbody id="raceTableBody"><tr><td class="skeleton">Loading weekly standings…</td></tr></tbody></table></div>
+        <div class="race-year-summary" id="raceYearSummary"></div>
+        <div id="raceMethodNote" class="race-footnote"></div>
+      </div>
+    </section>
+
     <div class="footer"><span id="footnote">Ranked by projected finish • H2H matchups ignored</span><span id="updated"></span></div>
   </main>
 
@@ -104,19 +200,210 @@ const rows=document.getElementById('rows'),quickRows=document.getElementById('qu
 const quickBtn=document.getElementById('quickBtn'),rangeBtn=document.getElementById('rangeBtn'),fullBtn=document.getElementById('fullBtn'),quickCard=document.getElementById('quickCard'),rangeCard=document.getElementById('rangeCard'),fullCard=document.getElementById('fullCard'),footnote=document.getElementById('footnote');
 const teamDetailBackdrop=document.getElementById('teamDetailBackdrop'),teamDetailClose=document.getElementById('teamDetailClose'),teamDetailTitle=document.getElementById('teamDetailTitle'),teamDetailSub=document.getElementById('teamDetailSub'),teamDetailCurrent=document.getElementById('teamDetailCurrent'),teamDetailProjected=document.getElementById('teamDetailProjected'),teamDetailP75=document.getElementById('teamDetailP75'),teamDetailRemaining=document.getElementById('teamDetailRemaining'),teamDetailRoster=document.getElementById('teamDetailRoster');
 const liveTab=document.getElementById('liveTab'),trendTab=document.getElementById('trendTab'),historyTab=document.getElementById('historyTab'),recalcTab=document.getElementById('recalcTab'),ranksTab=document.getElementById('ranksTab'),liveView=document.getElementById('liveView'),historyView=document.getElementById('historyView'),recalcView=document.getElementById('recalcView'),ranksView=document.getElementById('ranksView'),trendView=document.getElementById('trendView'),trendChart=document.getElementById('trendChart'),trendLegend=document.getElementById('trendLegend'),trendSeasonSelect=document.getElementById('trendSeasonSelect'),trendWeekSelect=document.getElementById('trendWeekSelect'),trendCurrentBtn=document.getElementById('trendCurrentBtn'),trendP75Btn=document.getElementById('trendP75Btn'),trendMeta=document.getElementById('trendMeta'),historyHead=document.getElementById('historyHead'),historyRows=document.getElementById('historyRows'),historyWarn=document.getElementById('historyWarn'),recalcHead=document.getElementById('recalcHead'),recalcRows=document.getElementById('recalcRows'),recalcWarn=document.getElementById('recalcWarn'),rankSummaryRows=document.getElementById('rankSummaryRows'),rankSeasonRows=document.getElementById('rankSeasonRows'),rankSeasonSelect=document.getElementById('rankSeasonSelect'),ranksWarn=document.getElementById('ranksWarn'),rankSummaryBtn=document.getElementById('rankSummaryBtn'),rankSeasonBtn=document.getElementById('rankSeasonBtn'),rankSummaryPane=document.getElementById('rankSummaryPane'),rankSeasonPane=document.getElementById('rankSeasonPane');
+const raceTab=document.getElementById('raceTab'),raceView=document.getElementById('raceView'),raceWeekSlider=document.getElementById('raceWeekSlider'),raceWeekValue=document.getElementById('raceWeekValue'),raceLatestWeekLabel=document.getElementById('raceLatestWeekLabel'),raceModeSelect=document.getElementById('raceModeSelect'),raceSlotsSelect=document.getElementById('raceSlotsSelect'),raceTableHead=document.getElementById('raceTableHead'),raceTableBody=document.getElementById('raceTableBody'),raceSummary=document.getElementById('raceSummary'),raceWarnings=document.getElementById('raceWarnings'),raceYearSummary=document.getElementById('raceYearSummary'),raceMethodNote=document.getElementById('raceMethodNote');
+let raceData=null,raceLoading=false,raceWeek=1;
 let historyLoaded=false;
 let lastData=null;
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}function fmt(n){return Number.isFinite(+n)?(+n).toFixed(1):'—'}
 function setView(mode){const q=mode==='quick',rg=mode==='range';quickCard.classList.toggle('active',q);rangeCard.classList.toggle('active',rg);fullCard.classList.toggle('hidden',q||rg);quickBtn.classList.toggle('active',q);rangeBtn.classList.toggle('active',rg);fullBtn.classList.toggle('active',!q&&!rg);footnote.textContent=q?'Quick view • owner names • projected top 5':rg?'P25 / ESPN projection / P75 • heuristic range':'Ranked by projected finish • H2H matchups ignored';localStorage.setItem('dke-view',mode)}
 quickBtn.onclick=()=>setView('quick');rangeBtn.onclick=()=>setView('range');fullBtn.onclick=()=>setView('full');
-function setSection(section){const trend=section==='trend',hist=section==='history',recalc=section==='recalc',ranks=section==='ranks';liveView.classList.toggle('hidden',trend||hist||recalc||ranks);trendView.classList.toggle('active',trend);historyView.classList.toggle('active',hist);recalcView.classList.toggle('active',recalc);ranksView.classList.toggle('active',ranks);liveTab.classList.toggle('active',!trend&&!hist&&!recalc&&!ranks);trendTab.classList.toggle('active',trend);historyTab.classList.toggle('active',hist);recalcTab.classList.toggle('active',recalc);ranksTab.classList.toggle('active',ranks);if(trend){footnote.textContent='Automatic 3-minute projected-score snapshots • stored by season/week';loadTrendWeeks().then(()=>loadTrend());}else if(hist||recalc||ranks){weekEl.textContent=hist?'2021–2025 • actual H2H wins + points':recalc?'2021–2025 • top-5 recalculated wins':'2021–2025 • actual rank vs top-5 rank';footnote.textContent=hist?'Original ESPN H2H results':recalc?'Recalculated from weekly points • opponent ignored':'Rank comparison • points break ties';if(!historyLoaded)loadHistory();}else{if(lastData)weekEl.textContent=`Week ${lastData.scoringPeriodId} • live all-play leaderboard`;setView(localStorage.getItem('dke-view') || (matchMedia('(max-width:700px)').matches?'quick':'full'));}localStorage.setItem('dke-section',section)}
-liveTab.onclick=()=>setSection('live');trendTab.onclick=()=>setSection('trend');historyTab.onclick=()=>setSection('history');recalcTab.onclick=()=>setSection('recalc');ranksTab.onclick=()=>setSection('ranks');
+function setSection(section){
+  const trend=section==='trend',hist=section==='history',recalc=section==='recalc',ranks=section==='ranks',race=section==='race';
+  liveView.classList.toggle('hidden',trend||hist||recalc||ranks||race);
+  for(const [view,active] of [[trendView,trend],[historyView,hist],[recalcView,recalc],[ranksView,ranks],[raceView,race]])view.classList.toggle('active',active);
+  for(const [tab,active] of [[liveTab,!trend&&!hist&&!recalc&&!ranks&&!race],[trendTab,trend],[historyTab,hist],[recalcTab,recalc],[ranksTab,ranks],[raceTab,race]])tab.classList.toggle('active',active);
+  if(trend){footnote.textContent='Automatic 3-minute projected-score snapshots • stored by season/week';loadTrendWeeks().then(()=>loadTrend());}
+  else if(race){weekEl.textContent=`Playoff race • through Week ${raceWeek}`;footnote.textContent='Ranked by cumulative wins through selected week';loadRace();}
+  else if(hist||recalc||ranks){weekEl.textContent=hist?'2021–2025 • actual H2H wins + points':recalc?'2021–2025 • top-5 recalculated wins':'2021–2025 • actual rank vs top-5 rank';footnote.textContent=hist?'Original ESPN H2H results':recalc?'Recalculated from weekly points • opponent ignored':'Rank comparison • points break ties';if(!historyLoaded)loadHistory();}
+  else{if(lastData)weekEl.textContent=`Week ${lastData.scoringPeriodId} • live all-play leaderboard`;setView(localStorage.getItem('dke-view') || (matchMedia('(max-width:700px)').matches?'quick':'full'));}
+  localStorage.setItem('dke-section',section);
+}
+liveTab.onclick=()=>setSection('live');trendTab.onclick=()=>setSection('trend');historyTab.onclick=()=>setSection('history');recalcTab.onclick=()=>setSection('recalc');ranksTab.onclick=()=>setSection('ranks');raceTab.onclick=()=>setSection('race');
 rankSummaryBtn.onclick=()=>{rankSummaryBtn.classList.add('active');rankSeasonBtn.classList.remove('active');rankSummaryPane.style.display='block';rankSeasonPane.style.display='none'};rankSeasonBtn.onclick=()=>{rankSeasonBtn.classList.add('active');rankSummaryBtn.classList.remove('active');rankSummaryPane.style.display='none';rankSeasonPane.style.display='block'};
 function pointsFmt(n){return Number.isFinite(+n)?Math.round(+n).toLocaleString():'—'}
 async function loadHistory(){try{historyRows.innerHTML='<tr><td class="skeleton">Loading five-year history…</td></tr>';recalcRows.innerHTML='<tr><td class="skeleton">Recalculating five seasons…</td></tr>';const r=await fetch('/api/history',{cache:'no-store'});const d=await r.json();if(!r.ok)throw new Error(d?.error||'Could not load history');historyLoaded=true;const years=d.years||[];historyHead.innerHTML='<tr><th class="ownercol">Owner</th>'+years.map(y=>`<th class="seasoncell">${y}</th>`).join('')+'<th class="seasoncell">5-Yr Wins</th><th class="seasoncell">5-Yr Pts</th></tr>';historyRows.innerHTML=(d.owners||[]).map(o=>'<tr><td class="ownercol owner">'+esc(o.ownerName)+'</td>'+years.map(y=>{const s=o.seasons?.[String(y)];return `<td class="seasoncell">${s?`<b>${s.wins} W</b><span>${pointsFmt(s.pointsFor)} pts</span>`:'<b>—</b>'}</td>`}).join('')+`<td class="totalcell">${o.totalWins}</td><td class="totalcell">${pointsFmt(o.totalPoints)}</td></tr>`).join('')||'<tr><td>No historical teams returned.</td></tr>';recalcHead.innerHTML='<tr><th class="ownercol">Owner</th>'+years.map(y=>`<th class="seasoncell">${y}</th>`).join('')+'<th class="seasoncell">Top-5 Wins</th><th class="seasoncell">Δ vs H2H</th><th class="seasoncell">5-Yr Pts</th></tr>';recalcRows.innerHTML=(d.topHalfOwners||[]).map(o=>'<tr><td class="ownercol owner">'+esc(o.ownerName)+'</td>'+years.map(y=>{const s=o.seasons?.[String(y)];return `<td class="seasoncell">${s?`<b>${fmtWin(s.topHalfWins)} W</b><span>${pointsFmt(s.pointsFor)} pts</span>`:'<b>—</b>'}</td>`}).join('')+`<td class="totalcell">${fmtWin(o.totalTopHalfWins)}</td><td class="totalcell">${signedWin(o.winDelta)}</td><td class="totalcell">${pointsFmt(o.totalPoints)}</td></tr>`).join('')||'<tr><td>No recalculated history returned.</td></tr>';const byOwner=new Map((d.owners||[]).map(o=>[o.ownerKey,o]));const actualRank=new Map((d.owners||[]).map((o,i)=>[o.ownerKey,i+1]));const topRank=new Map((d.topHalfOwners||[]).map((o,i)=>[o.ownerKey,i+1]));const allKeys=[...new Set([...(d.owners||[]).map(o=>o.ownerKey),...(d.topHalfOwners||[]).map(o=>o.ownerKey)])];const rankRows=allKeys.map(k=>{const o=byOwner.get(k)||(d.topHalfOwners||[]).find(x=>x.ownerKey===k);return {o,ar:actualRank.get(k),tr:topRank.get(k)}}).sort((a,b)=>(a.ar||99)-(b.ar||99));rankSummaryRows.innerHTML=rankRows.map(x=>`<tr><td class="ownercol owner">${esc(x.o.ownerName)}</td><td class="seasoncell"><b>#${x.ar}</b></td><td class="seasoncell"><b>#${x.tr}</b></td><td class="seasoncell"><b>${x.ar&&x.tr?signedWin(x.ar-x.tr):'—'}</b></td><td class="seasoncell">${fmtWin(x.o.totalWins)}</td><td class="seasoncell">${fmtWin(x.o.totalTopHalfWins)}</td><td class="seasoncell">${pointsFmt(x.o.totalPoints)}</td></tr>`).join('');rankSeasonSelect.innerHTML=years.map(y=>`<option value="${y}">${y}</option>`).join('');function renderSeasonRank(y){const seasonPeople=(d.owners||[]).map(o=>{const s=o.seasons?.[String(y)];return s?{ownerKey:o.ownerKey,ownerName:o.ownerName,...s}:null}).filter(Boolean);const a=[...seasonPeople].sort((x,y)=>y.wins-x.wins||y.pointsFor-x.pointsFor||x.ownerName.localeCompare(y.ownerName));const t=[...seasonPeople].sort((x,y)=>y.topHalfWins-x.topHalfWins||y.pointsFor-x.pointsFor||x.ownerName.localeCompare(y.ownerName));const ar=new Map(a.map((x,i)=>[x.ownerKey,i+1])),tr=new Map(t.map((x,i)=>[x.ownerKey,i+1]));rankSeasonRows.innerHTML=a.map(x=>`<tr><td class="ownercol owner">${esc(x.ownerName)}</td><td class="seasoncell"><b>#${ar.get(x.ownerKey)}</b></td><td class="seasoncell"><b>#${tr.get(x.ownerKey)}</b></td><td class="seasoncell"><b>${signedWin(ar.get(x.ownerKey)-tr.get(x.ownerKey))}</b></td><td class="seasoncell">${fmtWin(x.wins)}</td><td class="seasoncell">${fmtWin(x.topHalfWins)}</td><td class="seasoncell">${pointsFmt(x.pointsFor)}</td></tr>`).join('')||'<tr><td>No data for this season.</td></tr>'}rankSeasonSelect.onchange=()=>renderSeasonRank(rankSeasonSelect.value);renderSeasonRank(years[years.length-1]);const warn=(d.unavailableYears||[]).length?`<div class="warn">ESPN did not return: ${(d.unavailableYears||[]).map(x=>x.year).join(', ')}. Totals exclude those seasons.</div>`:'';historyWarn.innerHTML=warn;recalcWarn.innerHTML=warn;updatedEl.textContent='History updated '+new Date(d.updatedAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}catch(e){historyRows.innerHTML=`<tr><td class="err"><b>Couldn’t load ESPN history.</b><br><small>${esc(e.message)}</small></td></tr>`;recalcRows.innerHTML=`<tr><td class="err"><b>Couldn’t recalculate history.</b><br><small>${esc(e.message)}</small></td></tr>`;historyWarn.innerHTML='';recalcWarn.innerHTML='';}}
 function fmtWin(n){const x=Number(n);if(!Number.isFinite(x))return '—';return Number.isInteger(x)?String(x):x.toFixed(1)}function signedWin(n){const x=Number(n);if(!Number.isFinite(x))return '—';const v=Number.isInteger(x)?String(Math.abs(x)):Math.abs(x).toFixed(1);return `${x>0?'+':x<0?'−':''}${v}`;}
 
-const saved=localStorage.getItem('dke-view');setView(saved || (matchMedia('(max-width:700px)').matches?'quick':'full'));const savedSection=localStorage.getItem('dke-section');if(savedSection==='trend'||savedSection==='history'||savedSection==='recalc'||savedSection==='ranks')setSection(savedSection);
+
+function raceSelectedRows(season,week,mode){
+  const snap=season?.snapshots?.[String(week)];
+  return snap ? (mode==='topFive' ? snap.topFive : snap.asPlayed) : null;
+}
+function raceSlotsFor(season){
+  const selected=raceSlotsSelect.value;
+  return selected==='espn' ? Number(season?.playoffTeams||0) : Number(selected);
+}
+function raceStats(rows,slots){
+  if(!rows?.length)return null;
+  const gap=Number(rows[0].wins)-Number(rows[rows.length-1].wins);
+  const midpoint=Math.floor(rows.length/2),topAvg=rows.slice(0,midpoint).reduce((sum,t)=>sum+Number(t.wins),0)/midpoint;
+  const botAvg=rows.slice(midpoint).reduce((sum,t)=>sum+Number(t.wins),0)/(rows.length-midpoint);
+  const line=slots>=1&&slots<=rows.length ? Number(rows[slots-1].wins) : null;
+  const chasing=line===null?null:rows.slice(slots).filter(t=>line-Number(t.wins)>=2-1e-9).length;
+  return {spread:gap,tiers:topAvg-botAvg,line,chasing,slots};
+}
+// Deterministic Monte Carlo forecast, so revisiting the same week gives the same
+// colors. This is an illustrative model, not official ESPN playoff odds.
+const raceOddsCache=new Map();
+function raceRandom(seed){
+  let x=seed>>>0;
+  return ()=>{x=(x+0x6D2B79F5)|0;let t=Math.imul(x^(x>>>15),1|x);t=(t+Math.imul(t^(t>>>7),61|t))^t;return ((t^(t>>>14))>>>0)/4294967296;};
+}
+function raceNormal(rand){ // Approximate standard normal, fast enough for mobile
+  return (rand()+rand()+rand()+rand()+rand()+rand()-3)*Math.SQRT2;
+}
+function racePlayoffOdds(season,week,mode,slots){
+  const snap=season?.snapshots?.[String(week)];
+  const rows=snap?.[mode];
+  if(!rows?.length||!Number.isInteger(slots)||slots<1||slots>rows.length)return null;
+  const key=`${season.year}:${week}:${mode}:${slots}`;
+  if(raceOddsCache.has(key))return raceOddsCache.get(key);
+  const result={};
+  const remaining=Math.max(0,Number(season.regularWeeks||week)-week);
+  if(!remaining){rows.forEach((r,i)=>result[r.teamId]=i<slots?1:0);raceOddsCache.set(key,result);return result;}
+
+  const ids=rows.map(r=>Number(r.teamId)),n=ids.length;
+  const wins=rows.map(r=>Number(r.wins)||0),points=rows.map(r=>Number(r.points)||0);
+  const knownWeeks=(season.availableWeeks||[]).filter(w=>w<=week).sort((a,b)=>a-b);
+  const observed=Math.max(1,knownWeeks.length);
+  const leagueMean=points.reduce((a,b)=>a+b,0)/n/observed;
+  // Derive observed league score variation using *only* weekly results up to
+  // the selected week. Shrink small-sample team means toward league average.
+  const byId=new Map(ids.map((id,i)=>[id,i]));
+  const lastPoints=new Array(n).fill(0),samples=[];
+  for(const w of knownWeeks){
+    const weekRows=season.snapshots?.[String(w)]?.topFive||[];
+    for(const row of weekRows){
+      const i=byId.get(Number(row.teamId));if(i===undefined)continue;
+      const cum=Number(row.points);
+      if(!Number.isFinite(cum))continue;
+      const delta=cum-lastPoints[i];
+      if(delta>=0){samples.push(delta);lastPoints[i]=cum;}
+    }
+  }
+  const sampleAvg=samples.length?samples.reduce((a,b)=>a+b,0)/samples.length:leagueMean;
+  const variance=samples.length?samples.reduce((a,b)=>a+(b-sampleAvg)**2,0)/samples.length:625;
+  const weeklySD=Math.max(16,Math.min(38,Math.sqrt(variance)||25));
+  const strength=points.map(p=>leagueMean+(p/observed-leagueMean)*(observed/(observed+4)));
+  const useH2h=mode==='asPlayed'&&Number(season.year)!==Number(raceData.currentYear);
+  const totalRuns=900, made=new Array(n).fill(0);
+  const rand=raceRandom((Number(season.year)*97531+week*7963+slots*313+(useH2h?17:29))>>>0);
+  for(let run=0;run<totalRuns;run++){
+    const finalWins=wins.slice(),finalPoints=points.slice();
+    for(let nextWeek=week+1;nextWeek<=Number(season.regularWeeks);nextWeek++){
+      const weekScore=strength.map(mean=>Math.max(0,mean+raceNormal(rand)*weeklySD));
+      for(let i=0;i<n;i++)finalPoints[i]+=weekScore[i];
+      if(useH2h){
+        // Use ESPN's known weekly opponent pairings, never future match results.
+        const pairs=season.matchupsByWeek?.[String(nextWeek)]||[];
+        const paired=new Set();
+        for(const pair of pairs){
+          const i=byId.get(Number(pair.homeId)),j=byId.get(Number(pair.awayId));
+          if(i===undefined||j===undefined||i===j||paired.has(i)||paired.has(j))continue;
+          paired.add(i);paired.add(j);
+          if(weekScore[i]>weekScore[j])finalWins[i]++;
+          else if(weekScore[j]>weekScore[i])finalWins[j]++;
+          else {finalWins[i]+=.5;finalWins[j]+=.5;}
+        }
+        // Some ESPN historical schedules omit pairings; pair unmatched
+        // teams randomly rather than treating them as guaranteed losses.
+        const spare=ids.map((_,i)=>i).filter(i=>!paired.has(i));
+        for(let i=spare.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[spare[i],spare[j]]=[spare[j],spare[i]];}
+        for(let k=0;k+1<spare.length;k+=2){const i=spare[k],j=spare[k+1];if(weekScore[i]>weekScore[j])finalWins[i]++;else finalWins[j]++;}
+      } else {
+        const ranked=ids.map((_,i)=>i).sort((i,j)=>weekScore[j]-weekScore[i]||i-j);
+        for(let i=0;i<Math.ceil(n/2);i++)finalWins[ranked[i]]++;
+      }
+    }
+    const order=ids.map((_,i)=>i).sort((i,j)=>finalWins[j]-finalWins[i]||finalPoints[j]-finalPoints[i]||i-j);
+    for(let k=0;k<slots;k++)made[order[k]]++;
+  }
+  ids.forEach((id,i)=>result[id]=made[i]/totalRuns);
+  raceOddsCache.set(key,result);
+  return result;
+}
+function raceChanceColor(chance){
+  // Smooth red → amber → green scale. Each cell also shows its numeric chance.
+  const t=Math.max(0,Math.min(1,Number(chance)||0));
+  const a=t<=.5?[196,66,86]:[207,158,50],b=t<=.5?[207,158,50]:[47,155,109],f=t<=.5?t*2:(t-.5)*2;
+  const rgb=a.map((v,i)=>Math.round(v+(b[i]-v)*f));
+  return {rgb:rgb.join(','),bright:t<.3?'#ffb8c1':t<.7?'#ffe4a4':'#a2f7c4'};
+}
+function raceChanceLabel(chance){
+  if(chance===null||chance===undefined)return '—';
+  if(chance<=0)return '0%';if(chance>=1)return '100%';
+  return `${Math.round(chance*20)*5}%`;
+}
+function renderRace(){
+  if(!raceData)return;
+  const years=[...(raceData.years||[])].sort((a,b)=>Number(b)-Number(a)),mode=raceModeSelect.value;
+  raceWeek=Math.max(1,Math.min(Number(raceData.maxWeek)||1,Number(raceWeekSlider.value)||raceWeek));
+  raceWeekSlider.value=String(raceWeek);raceWeekValue.textContent=String(raceWeek);
+  weekEl.textContent=`Playoff race • through Week ${raceWeek}`;
+  const perYear=years.map(year=>{
+    const season=raceData.seasons?.[String(year)],rows=raceSelectedRows(season,raceWeek,mode),slots=raceSlotsFor(season);
+    return {year,season,rows,stats:raceStats(rows,slots),odds:racePlayoffOdds(season,raceWeek,mode,slots)};
+  });
+  const present=perYear.filter(x=>x.rows?.length),latest=perYear.find(x=>Number(x.year)===Number(raceData.currentYear));
+  const last=latest?.stats;
+  const stat=(label,value,detail)=>`<div class="race-stat"><div class="label">${esc(label)}</div><div class="value">${esc(String(value))}</div><div class="detail">${esc(detail)}</div></div>`;
+  const projectedOut=latest?.odds?Object.values(latest.odds).filter(p=>p<.2).length:null;
+  raceSummary.innerHTML=stat('2026 • 1st to last',last?`${fmtWin(last.spread)} W`:'—','Current standings spread')+
+    stat('2026 • Top 5 vs bottom 5',last?`${fmtWin(last.tiers)} W`:'—','Difference in average wins')+
+    stat('2026 • 2+ wins behind line',last&&last.chasing!==null?last.chasing:'—',last?.chasing===null?'Choose playoff berth count':'Outside current playoff berths')+
+    stat('2026 • likely out',projectedOut===null?'—':projectedOut,'Under 20% estimated playoff chance');
+  const maxTeams=Math.max(10,...present.map(x=>x.rows.length));
+  raceTableHead.innerHTML='<tr><th class="race-rank">Rank</th>'+perYear.map(x=>`<th class="${Number(x.year)===Number(raceData.currentYear)?'race-current':''}">${x.year}</th>`).join('')+'</tr>';
+  const cutoff=latest?.stats?.slots||null;
+  raceTableBody.innerHTML=Array.from({length:maxTeams},(_,i)=>{
+    const cells=perYear.map(x=>{
+      const row=x.rows?.[i],current=Number(x.year)===Number(raceData.currentYear)?' race-current':'';
+      if(!row)return `<td class="race-no-data${current}">—</td>`;
+      const chance=x.odds?.[row.teamId];
+      if(!Number.isFinite(chance))return `<td class="${current.trim()}" title="${esc(row.name)} · ${pointsFmt(row.points)} points"><div class="race-win">${fmtWin(row.wins)} <small>W</small></div><div class="race-team">${esc(row.name)}</div></td>`;
+      const shade=raceChanceColor(chance),pct=raceChanceLabel(chance);
+      const style=`--chance-accent:rgb(${shade.rgb});--chance-text:${shade.bright};background-color:rgba(${shade.rgb},.30)`;
+      return `<td class="race-odds-cell${current}" style="${style}" title="${esc(row.name)} · ${pointsFmt(row.points)} points · estimated ${Math.round(chance*100)}% playoff chance"><div class="race-win">${fmtWin(row.wins)} <small style="font-size:10px;color:#dce4ed">W</small></div><div class="race-team">${esc(row.name)}</div><span class="race-odds">≈ ${pct} chance</span></td>`;
+    }).join('');
+    return `<tr class="${cutoff&&i===cutoff?'race-divider':''}"><td class="race-rank">#${i+1}</td>${cells}</tr>`;
+  }).join('');
+  raceYearSummary.innerHTML='<table><thead><tr><th>At Week '+raceWeek+'</th>'+perYear.map(x=>`<th>${x.year}</th>`).join('')+'</tr></thead><tbody>'+
+    '<tr><td>1st–last gap</td>'+perYear.map(x=>`<td>${x.stats?`${fmtWin(x.stats.spread)} W`:'—'}</td>`).join('')+'</tr>'+
+    '<tr><td>Top 5 vs bottom 5</td>'+perYear.map(x=>`<td>${x.stats?`${fmtWin(x.stats.tiers)} W`:'—'}</td>`).join('')+'</tr>'+
+    '<tr><td>2+ W behind playoff line</td>'+perYear.map(x=>`<td>${x.stats?.chasing!==null&&x.stats?x.stats.chasing:'—'}</td>`).join('')+'</tr>'+
+    '<tr><td>Under 20% estimated chance</td>'+perYear.map(x=>`<td>${x.odds?Object.values(x.odds).filter(p=>p<.2).length:'—'}</td>`).join('')+'</tr></tbody></table>';
+  const missing=(raceData.unavailableYears||[]).map(x=>x.year);
+  const missingWeeks=present.filter(x=>x.season?.incompleteWeeks?.includes(raceWeek)).map(x=>x.year);
+  raceWarnings.innerHTML=(missing.length?`<div class="race-warning">ESPN unavailable for ${missing.join(', ')}. Those seasons show as —.</div>`:'')+
+    (missingWeeks.length?`<div class="race-warning">Week ${raceWeek} is missing complete scores for ${missingWeeks.join(', ')}; those cells cannot be estimated.</div>`:'');
+  raceMethodNote.textContent=`Playoff chances are illustrative Monte Carlo estimates (900 simulated finishes per season), NOT official ESPN odds or mathematical elimination. The model uses each team's wins, points through Week ${raceWeek}, remaining regular-season games, ESPN playoff berth count, and known H2H future matchups where applicable. It estimates future weekly scores from performance observed up to that week, shrinking small samples toward the league average; no future results are used. Percentages are rounded to 5-point steps; green is roughly 70%+, yellow 30–70%, red below 30%. `+
+    `As played: 2021–2025 use H2H records; 2026 uses top-five wins and ESPN's complete commissioner-adjusted record at the latest completed week. “Top 5 for all years” recalculates historical seasons. Tiebreaker: points scored. `+
+    (raceSlotsSelect.value==='espn'?'Playoff berths follow ESPN settings for each year.':'The chosen playoff berth count applies to all seasons.');
+  updatedEl.textContent='Race updated '+new Date(raceData.updatedAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
+}
+async function loadRace(){
+  if(raceData){renderRace();return;}
+  if(raceLoading)return;
+  raceLoading=true;
+  try{
+    raceTableBody.innerHTML='<tr><td class="skeleton">Loading historical weekly standings…</td></tr>';
+    const res=await fetch('/api/race',{cache:'no-store'});const d=await res.json();
+    if(!res.ok)throw new Error(d.error||'ESPN race history unavailable');
+    raceData=d;const max=Math.max(1,Number(d.maxWeek)||1);raceWeekSlider.max=String(max);raceWeekSlider.disabled=max<2;
+    raceLatestWeekLabel.textContent=`Week ${max} • latest completed`;
+    const savedWeek=Number(localStorage.getItem('dke-race-week'));
+    raceWeek=Number.isInteger(savedWeek)&&savedWeek>=1&&savedWeek<=max?savedWeek:max;
+    raceWeekSlider.value=String(raceWeek);renderRace();
+  }catch(e){raceTableBody.innerHTML=`<tr><td class="err">Couldn’t load historical records: ${esc(e.message)}</td></tr>`;raceWarnings.innerHTML='';}
+  finally{raceLoading=false;}
+}
+raceWeekSlider.addEventListener('input',()=>{raceWeek=Number(raceWeekSlider.value);localStorage.setItem('dke-race-week',String(raceWeek));renderRace();});
+raceModeSelect.value=localStorage.getItem('dke-race-mode')||'asPlayed';
+raceSlotsSelect.value=localStorage.getItem('dke-race-slots')||'espn';
+raceModeSelect.onchange=()=>{localStorage.setItem('dke-race-mode',raceModeSelect.value);renderRace();};
+raceSlotsSelect.onchange=()=>{localStorage.setItem('dke-race-slots',raceSlotsSelect.value);renderRace();};
+
+const saved=localStorage.getItem('dke-view');setView(saved || (matchMedia('(max-width:700px)').matches?'quick':'full'));const savedSection=localStorage.getItem('dke-section');if(savedSection==='trend'||savedSection==='history'||savedSection==='recalc'||savedSection==='ranks'||savedSection==='race')setSection(savedSection);
 function projectionRange(t){const current=Number(t.current||0),projected=Math.max(current,Number(t.projected||current));const remaining=Math.max(0,projected-current);if(remaining<=0.05)return {p25:projected,p75:projected};const left=Math.max(1,Number(t.playersLeftCount||1)),live=(t.playersLive||[]).length;const liveShare=Math.min(1,live/left);const cv=.30-.07*liveShare;const half=.674*cv*remaining;return {p25:Math.max(current,projected-half),p75:projected+half};}
 
 function openTeamDetail(teamId){
