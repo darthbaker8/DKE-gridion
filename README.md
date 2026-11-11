@@ -108,3 +108,10 @@ unavailable values instead of inventing wins.
 - `race.js` now returns each year's matchup *pairings only* for the remaining
   regular-season schedule to simulate historical H2H games without future-score leakage.
 - No new services, credentials, packages, or Vercel configuration changes.
+
+## v18 — Zero-chance dead zone
+- Adds a distinct deep burgundy **Dead · 0% modeled** color to the Playoff Race heatmap and legend.
+- Only exactly zero simulated playoff probability receives the dark shade. Nonzero results retain the red → yellow → green scale.
+- Very small nonzero estimates now show `<5%` rather than rounding down to `0%`, so the dark shade and 0% label consistently identify zero simulations making the playoffs.
+- A model result of 0% does **not** necessarily mean mathematically eliminated; for weeks with no games remaining, it reflects the final ranking.
+- Same 11-file flat manual-upload layout; no changes to API, dependencies, or Vercel settings.

@@ -62,6 +62,7 @@
     #raceView .race-table .race-win{font-size:21px;font-weight:900;line-height:1.05;font-variant-numeric:tabular-nums}
     #raceView .race-table .race-team{font-size:10px;color:#d8e2ef;overflow-wrap:anywhere;line-height:1.3;margin-top:5px}
     #raceView .race-table td.race-odds-cell{transition:background-color .13s ease;box-shadow:inset 3px 0 0 var(--chance-accent)}
+    #raceView .race-table td.race-dead{box-shadow:inset 4px 0 0 #c73c57,inset 0 0 0 1px rgba(224,86,110,.35)}
     #raceView .race-table .race-odds{display:inline-block;margin-top:7px;padding:3px 6px;border-radius:6px;font-size:10px;font-weight:900;letter-spacing:.01em;background:rgba(5,12,24,.37);color:var(--chance-text);font-variant-numeric:tabular-nums}
     .race-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 15px;padding:10px 1px 12px;color:#dce4ed;font-size:11px}
     .race-legend strong{font-size:11px;color:var(--gold)}
@@ -171,7 +172,8 @@
           <strong>PLAYOFF ODDS</strong>
           <span class="race-key"><span class="race-key-swatch" style="background:rgba(47,155,109,.58)"></span>Green · 70–100%</span>
           <span class="race-key"><span class="race-key-swatch" style="background:rgba(207,158,50,.60)"></span>Yellow · 30–70%</span>
-          <span class="race-key"><span class="race-key-swatch" style="background:rgba(196,66,86,.58)"></span>Red · 0–30%</span>
+          <span class="race-key"><span class="race-key-swatch" style="background:rgba(196,66,86,.58)"></span>Red · above 0%, below 30%</span>
+          <span class="race-key"><span class="race-key-swatch race-key-dead" style="background:#620d24"></span>Dead · 0% modeled</span>
           <span class="race-key-note">Shading estimates each team's chance of finishing inside the playoff cut, based only on information through the selected week.</span>
         </div>
         <div id="raceWarnings"></div>
@@ -323,16 +325,20 @@ function racePlayoffOdds(season,week,mode,slots){
   return result;
 }
 function raceChanceColor(chance){
-  // Smooth red → amber → green scale. Each cell also shows its numeric chance.
+  // Exact zero gets a clearly distinct deep-burgundy shade, not the usual red.
+  // This is ZERO IN THE SIMULATION, not mathematical elimination.
   const t=Math.max(0,Math.min(1,Number(chance)||0));
+  if(t===0)return {rgb:'98,13,36',bright:'#ffe0e4',opacity:.86,dead:true};
+  // Smooth red → amber → green scale for every nonzero chance.
   const a=t<=.5?[196,66,86]:[207,158,50],b=t<=.5?[207,158,50]:[47,155,109],f=t<=.5?t*2:(t-.5)*2;
   const rgb=a.map((v,i)=>Math.round(v+(b[i]-v)*f));
-  return {rgb:rgb.join(','),bright:t<.3?'#ffb8c1':t<.7?'#ffe4a4':'#a2f7c4'};
+  return {rgb:rgb.join(','),bright:t<.3?'#ffb8c1':t<.7?'#ffe4a4':'#a2f7c4',opacity:.30,dead:false};
 }
 function raceChanceLabel(chance){
   if(chance===null||chance===undefined)return '—';
   if(chance<=0)return '0%';if(chance>=1)return '100%';
-  return `${Math.round(chance*20)*5}%`;
+  const rounded=Math.round(chance*20)*5;
+  return rounded===0?'<5%':`${rounded}%`;
 }
 function renderRace(){
   if(!raceData)return;
@@ -362,8 +368,9 @@ function renderRace(){
       const chance=x.odds?.[row.teamId];
       if(!Number.isFinite(chance))return `<td class="${current.trim()}" title="${esc(row.name)} · ${pointsFmt(row.points)} points"><div class="race-win">${fmtWin(row.wins)} <small>W</small></div><div class="race-team">${esc(row.name)}</div></td>`;
       const shade=raceChanceColor(chance),pct=raceChanceLabel(chance);
-      const style=`--chance-accent:rgb(${shade.rgb});--chance-text:${shade.bright};background-color:rgba(${shade.rgb},.30)`;
-      return `<td class="race-odds-cell${current}" style="${style}" title="${esc(row.name)} · ${pointsFmt(row.points)} points · estimated ${Math.round(chance*100)}% playoff chance"><div class="race-win">${fmtWin(row.wins)} <small style="font-size:10px;color:#dce4ed">W</small></div><div class="race-team">${esc(row.name)}</div><span class="race-odds">≈ ${pct} chance</span></td>`;
+      const style=`--chance-accent:rgb(${shade.rgb});--chance-text:${shade.bright};background-color:rgba(${shade.rgb},${shade.opacity})`;
+      const oddsLabel=shade.dead?'0% modeled chance':`≈ ${pct} chance`;
+      return `<td class="race-odds-cell${shade.dead?' race-dead':''}${current}" style="${style}" title="${esc(row.name)} · ${pointsFmt(row.points)} points · estimated ${Math.round(chance*100)}% playoff chance"><div class="race-win">${fmtWin(row.wins)} <small style="font-size:10px;color:#dce4ed">W</small></div><div class="race-team">${esc(row.name)}</div><span class="race-odds">${oddsLabel}</span></td>`;
     }).join('');
     return `<tr class="${cutoff&&i===cutoff?'race-divider':''}"><td class="race-rank">#${i+1}</td>${cells}</tr>`;
   }).join('');
@@ -376,7 +383,7 @@ function renderRace(){
   const missingWeeks=present.filter(x=>x.season?.incompleteWeeks?.includes(raceWeek)).map(x=>x.year);
   raceWarnings.innerHTML=(missing.length?`<div class="race-warning">ESPN unavailable for ${missing.join(', ')}. Those seasons show as —.</div>`:'')+
     (missingWeeks.length?`<div class="race-warning">Week ${raceWeek} is missing complete scores for ${missingWeeks.join(', ')}; those cells cannot be estimated.</div>`:'');
-  raceMethodNote.textContent=`Playoff chances are illustrative Monte Carlo estimates (900 simulated finishes per season), NOT official ESPN odds or mathematical elimination. The model uses each team's wins, points through Week ${raceWeek}, remaining regular-season games, ESPN playoff berth count, and known H2H future matchups where applicable. It estimates future weekly scores from performance observed up to that week, shrinking small samples toward the league average; no future results are used. Percentages are rounded to 5-point steps; green is roughly 70%+, yellow 30–70%, red below 30%. `+
+  raceMethodNote.textContent=`Playoff chances are illustrative Monte Carlo estimates (900 simulated finishes per season), NOT official ESPN odds or mathematical elimination. The model uses each team's wins, points through Week ${raceWeek}, remaining regular-season games, ESPN playoff berth count, and known H2H future matchups where applicable. It estimates future weekly scores from performance observed up to that week, shrinking small samples toward the league average; no future results are used. Nonzero percentages are rounded to 5-point steps (with <5% shown instead of rounding a tiny chance to 0%); green is roughly 70%+, yellow 30–70%, red above 0% and below 30%, and dark burgundy means a 0% simulated chance, not formal elimination. `+
     `As played: 2021–2025 use H2H records; 2026 uses top-five wins and ESPN's complete commissioner-adjusted record at the latest completed week. “Top 5 for all years” recalculates historical seasons. Tiebreaker: points scored. `+
     (raceSlotsSelect.value==='espn'?'Playoff berths follow ESPN settings for each year.':'The chosen playoff berth count applies to all seasons.');
   updatedEl.textContent='Race updated '+new Date(raceData.updatedAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
