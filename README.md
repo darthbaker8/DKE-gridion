@@ -1,4 +1,4 @@
-# DKE Gridiron v16 — Playoff Race
+# DKE Gridiron v20 — Playoff Race & Season-Finish Badges
 
 ## Automatic + Historical Trend Collection
 
@@ -122,3 +122,23 @@ unavailable values instead of inventing wins.
 - A dark-red cell with a nonzero estimated chance still shows its nonzero chance label (`<5%` or `≈ 5%`) instead of displaying `0%`.
 - The legend and methodology text were updated. The dark color is a visualization threshold, not official ESPN odds or proof of mathematical elimination.
 - All 11 flat deployment files are preserved; no API, package, or Vercel configuration changes.
+
+## v20 — Historical playoff finish badges
+- The Playoff Race grid now displays retrospective **★ Winner**, **Runner-Up**, and two
+  **P · Playoff** badges for the actual top-four teams from each completed season.
+- As you drag the slider to earlier weeks, badges follow the team's identity (not its
+  row/rank), so a future finalist can be spotted near the bottom of Week 8 standings.
+- Labels come from ESPN's final ranks (not modeled playoff probabilities or
+  reconstructed standings). If ESPN final ranks are missing, a completed four-team
+  winners' bracket can identify the four finishers; otherwise no outcomes are invented.
+- The unfinished 2026 season intentionally has **no badges** until a championship is
+  completed. Badges stay actual even in retrospective “Top 5 for all years” mode.
+- For seasons with more than four playoff entrants, P identifies the other two
+  top-four finishers, not every team that made the larger playoff bracket.
+- Heatmap ranges, Monte Carlo model, and 11-file manual-upload structure are unchanged.
+
+## Validation note
+- Verified server-side extraction for official ranking, missing/partial ranks, semifinal
+  and title-game results, and active-season suppression using synthetic fixtures.
+- Live ESPN league data is not accessible from the authoring environment; please
+  compare past-season badge recipients against ESPN after deployment.

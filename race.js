@@ -28,6 +28,63 @@ function rawPoints(side) {
   const pts = Number(side.totalPoints);
   return Number.isFinite(pts) ? pts : null;
 }
+
+// Actual end-of-season results: badges remain attached to the team when the
+// slider replays an earlier week. Never infer these from the week-N standings.
+// Exactly four badges are shown: champion, runner-up, and the two other top-4
+// finishers (semifinalists), not every possible consolation-bracket participant.
+function completedPlayoffResult(match) {
+  const home = Number(match?.home?.teamId), away = Number(match?.away?.teamId);
+  if (!Number.isInteger(home) || !Number.isInteger(away) || home <= 0 || away <= 0 || home === away) return null;
+  const w = String(match?.winner || '').toUpperCase();
+  if (w !== 'HOME' && w !== 'AWAY') return null; // Never infer a winner from incomplete scores.
+  return {week: Number(match?.matchupPeriodId), home, away, winner:w === 'HOME' ? home : away, loser:w === 'HOME' ? away : home};
+}
+function extractPlayoffFinishes(data, year, regularWeeks, playoffTeams, ids) {
+  const teams = Array.isArray(data.teams) ? data.teams : [];
+  // ESPN's final ranking is the authoritative historical result (including
+  // manually adjusted championships). Do not use projected playoff seeds.
+  if (year < CURRENT_YEAR) {
+    for (const field of ['rankFinal', 'rankCalculatedFinal']) {
+      const byRank = new Map();
+      for (const t of teams) {
+        const rank = Number(t?.[field]);
+        if (!Number.isInteger(rank) || rank < 1 || rank > 4) continue;
+        if (!byRank.has(rank)) byRank.set(rank, []);
+        byRank.get(rank).push(Number(t.id));
+      }
+      if ([1,2,3,4].every(rank=>byRank.get(rank)?.length===1 && ids.has(byRank.get(rank)[0]))) {
+        return {finishes: Object.fromEntries([1,2,3,4].map((rank)=>[String(byRank.get(rank)[0]),rank===1?'winner':rank===2?'runnerUp':'playoff'])),source:field};
+      }
+    }
+  }
+
+  // Fallback for four-team brackets when official final rankings are missing.
+  // A completed championship must follow a completed semifinal round. This
+  // also prevents the active 2026 season being awarded badges prematurely.
+  if (playoffTeams !== 4) return {finishes:{},source:'not-complete'};
+  const eligible = new Set(teams.filter(t=>Number(t.playoffSeed)>=1 && Number(t.playoffSeed)<=4).map(t=>Number(t.id)));
+  const games = (data.schedule||[]).filter(m=>Number(m?.matchupPeriodId)>regularWeeks).map(m=>({
+    tier:String(m.playoffTierType||'').toUpperCase(),result:completedPlayoffResult(m)
+  })).filter(m=>m.result && ids.has(m.result.home) && ids.has(m.result.away));
+  const winners = games.filter(m=>m.tier==='WINNERS_BRACKET' || (!m.tier && eligible.has(m.result.home) && eligible.has(m.result.away)))
+    .map(m=>m.result).sort((a,b)=>a.week-b.week);
+  const rounds = [...new Set(winners.map(g=>g.week))].sort((a,b)=>a-b);
+  if (rounds.length<2)return {finishes:{},source:'not-complete'};
+  const semiWeek=rounds[rounds.length-2], finalWeek=rounds[rounds.length-1];
+  const semis=winners.filter(g=>g.week===semiWeek);
+  const finals=winners.filter(g=>g.week===finalWeek);
+  if (semis.length!==2 || new Set(semis.flatMap(g=>[g.home,g.away])).size!==4) return {finishes:{},source:'not-complete'};
+  const finalists=new Set(semis.map(g=>g.winner));
+  const titleGames=finals.filter(g=>finalists.has(g.home)&&finalists.has(g.away));
+  if (titleGames.length!==1)return {finishes:{},source:'not-complete'};
+  const title=titleGames[0];
+  const other=semis.map(g=>g.loser);
+  const finishing=[title.winner,title.loser,...other];
+  if (new Set(finishing).size!==4)return {finishes:{},source:'not-complete'};
+  return {finishes:Object.fromEntries(finishing.map((id,i)=>[String(id),i===0?'winner':i===1?'runnerUp':'playoff'])),source:'completed-bracket'};
+}
+
 function standingsAtWeek(data, year) {
   const teams = Array.isArray(data.teams) ? data.teams : [];
   if (!teams.length) throw new Error('No ESPN teams returned');
@@ -142,8 +199,10 @@ function standingsAtWeek(data, year) {
       topFive: normalized.sort(byRank)
     };
   }
+  const playoffResult = extractPlayoffFinishes(data, year, regularWeeks, playoffTeams, ids);
   return {
     year, regularWeeks, completedWeeks, playoffTeams, teamCount: descriptors.length,
+    playoffFinishes: playoffResult.finishes, playoffFinishSource: playoffResult.source,
     availableWeeks: Object.keys(snapshots).map(Number), incompleteWeeks,
     // Important for the current season: the latest official ESPN standings can override a
     // reconstructed top-five snapshot only when all games in that week are reflected.
@@ -172,4 +231,5 @@ async function handler(req, res) {
     updatedAt: new Date().toISOString() });
 }
 handler.standingsAtWeek = standingsAtWeek;
+handler.extractPlayoffFinishes = extractPlayoffFinishes;
 module.exports = handler;
