@@ -179,3 +179,9 @@ unavailable values instead of inventing wins.
 - Teams sort by calculated top-five wins, then cumulative points. The record beside the owner excludes missing weeks; discrepancy with the latest adjusted ESPN record is explicitly noted. Weekly ranks are independent of ESPN H2H results.
 - Highest score and fifth-place winning cutoff shown below each week. All week columns fit on desktop/tablet and phone (whole-point rounding on phones, full ESPN score and rank on tap).
 - Uses the existing `/api/race` endpoint, now returning `teams` and `weeklyResults` for 2026, no additional environment variables or storage changes. Refresh fetches current results.
+
+## v23 — Season Tracker by Rank
+- Renames the original tab **Season Tracker by Team**, preserving its fixed team rows and standings sort.
+- Adds **Season Tracker by Rank**: rows #1–#10 are weekly finish slots, with each week sorted independently by actual fantasy points. Cells show points and owner (compact initials on small screens), with full name, exact score, official weekly rank and win credit on tap.
+- Top-five wins are green; losses red; split cutoff ties yellow; not-final weeks neutral. Equal scores share competition rank in detail and occupy adjacent slots, ordered by team ID. The winning cutoff is marked between slots 5 and 6.
+- Both tabs use the same existing /api/race weeklyResults, 14 regular-season columns, high-score/cutoff rows, refresh, and flat 11-file deployment. No server/API/config/storage changes.
