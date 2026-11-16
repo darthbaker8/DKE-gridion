@@ -1,4 +1,4 @@
-# DKE Gridiron v21 — PF Heatmap & Distribution Explorer
+# DKE Gridiron v22 — Season Tracker
 
 ## Automatic + Historical Trend Collection
 
@@ -172,3 +172,10 @@ unavailable values instead of inventing wins.
 ### Validation
 - Checked the frontend JS syntax; tested desktop (1300px) and mobile (390px) rendering with mocked 10-team/6-season data; validated metric toggle, both week sliders, per-year distribution marker counts, year filtering, chart mode switch, season-finish badges, two-tier heuristic for clearly split and evenly spaced data, and touch/click team selection. No browser script errors in those tests.
 - ESPN's live historical league feed and production deployments were **not** verified from the development environment. Check 2026 PF and past-season totals against ESPN after deployment.
+
+## v22 — Season Tracker
+- Current season only: one row per team, one column per regular-season week, including future weeks.
+- Green W / red L cells show the actual completed weekly fantasy points and top-five result; yellow T shows split credit for an exact cutoff tie. Gray cells are not final; missing completed scores are marked ?.
+- Teams sort by calculated top-five wins, then cumulative points. The record beside the owner excludes missing weeks; discrepancy with the latest adjusted ESPN record is explicitly noted. Weekly ranks are independent of ESPN H2H results.
+- Highest score and fifth-place winning cutoff shown below each week. All week columns fit on desktop/tablet and phone (whole-point rounding on phones, full ESPN score and rank on tap).
+- Uses the existing `/api/race` endpoint, now returning `teams` and `weeklyResults` for 2026, no additional environment variables or storage changes. Refresh fetches current results.

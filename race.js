@@ -144,6 +144,7 @@ function standingsAtWeek(data, year) {
   const running = new Map(descriptors.map(t => [t.id, { winsH2h: 0, winsTop5: 0, points: 0 }]));
   const snapshots = {};
   const incompleteWeeks = [];
+  const weeklyResults = {};
   for (let week = 1; week <= completedWeeks; week++) {
     const weekMap = weeklyScores.get(week);
     // Never present partial weeks as valid standings, especially for this season.
@@ -153,14 +154,19 @@ function standingsAtWeek(data, year) {
     const winningSpots = Math.ceil(descriptors.length / 2);
     // Award fraction of the last spot for ties crossing the top-five cutoff.
     let pos = 0;
+    const weeklyRows = [];
     while (pos < sorted.length) {
       let end = pos + 1;
       while (end < sorted.length && sorted[end].points === sorted[pos].points) end++;
       const spots = Math.max(0, Math.min(end, winningSpots) - pos);
       const credit = spots / (end - pos);
-      for (let k = pos; k < end; k++) running.get(sorted[k].id).winsTop5 += credit;
+      for (let k = pos; k < end; k++) {
+        running.get(sorted[k].id).winsTop5 += credit;
+        weeklyRows.push({ teamId: sorted[k].id, points: sorted[k].points, rank: pos + 1, winCredit: credit });
+      }
       pos = end;
     }
+    weeklyResults[String(week)] = weeklyRows;
     for (const row of sorted) running.get(row.id).points += row.points;
     for (const match of weeklyMatchups.get(week) || []) {
       const h = running.get(match.homeId), a = running.get(match.awayId);
@@ -202,6 +208,7 @@ function standingsAtWeek(data, year) {
   const playoffResult = extractPlayoffFinishes(data, year, regularWeeks, playoffTeams, ids);
   return {
     year, regularWeeks, completedWeeks, playoffTeams, teamCount: descriptors.length,
+    ...(year === CURRENT_YEAR ? { teams: descriptors.map(({id,name,teamName})=>({teamId:id,name,teamName})), weeklyResults } : {}),
     playoffFinishes: playoffResult.finishes, playoffFinishSource: playoffResult.source,
     availableWeeks: Object.keys(snapshots).map(Number), incompleteWeeks,
     // Important for the current season: the latest official ESPN standings can override a
